@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html class="sl-root decks show " data-account="free">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>C 指標 Pointer part1 by Jie-Han Chen</title>
+    <meta name="description" content="操作方式：有出現往下按鈕的時候，請往下按來觀看，到底時再往右。 按 ESC 可以查看投影片架構" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <meta property="og:title" content="C 指標 Pointer part1 by Jie-Han Chen" />
+    <meta property="og:description" content="操作方式：有出現往下按鈕的時候，請往下按來觀看，到底時再往右。 按 ESC 可以查看投影片架構" />
+    <meta property="og:site_name" content="Slides" />
+    <meta property="og:image" content="https://s3.amazonaws.com/media-p.slid.es/thumbnails/6622e4b4a2405ac8ddb0ba74f6761434/thumb.jpg" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="http://slides.com/jie-hanchen/pointer-2-3" />
+    <meta property="fb:app_id" content="146002942236376" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <link rel="manifest" href="/manifest.json">
+
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,600,700&subset=latin,cyrillic-ext,greek-ext,greek,latin-ext,cyrillic" rel="stylesheet" type="text/css" data-application-font="opensans">
+
+    <link href="//assets.slid.es/assets/slides/slides-1df814f963530a8557bab503c81c1049.css" media="all" rel="stylesheet" />
+    <link href="//assets.slid.es/assets/application-d202e572391aa525c603ef5922a62010.css" media="all" rel="stylesheet" />
+    	<link href="//assets.slid.es/assets/deck-v2-b50d15489798f38975e3f570617f3f6a.css" media="all" rel="stylesheet" />
+
+
+
+<style id="user-css-output" type="text/css"></style>
+
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="3SfiSUPtmn7IHaPBfd7wcXVWYYOJYO/9zMhnuLjLYXY=" name="csrf-token" />
+    <script type="text/javascript">
+  if( !/dnt=1/.test( window.location.search ) ) {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-39670045-1', 'auto');
+    ga('send', 'pageview');
+
+  }
+</script>
+    <!--[if lt IE 9]>
+    <script src="//assets.slid.es/assets/html5shiv-b51d49ab0e89834a02ffce4a59905afb.js"></script>
+<![endif]-->
+    	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@Slides">
+	<meta name="twitter:title" content="C 指標 Pointer part1">
+	<meta name="twitter:description" content="操作方式：有出現往下按鈕的時候，請往下按來觀看，到底時再往右。 按 ESC 可以查看投影片架構">
+	<meta name="twitter:image" content="https://s3.amazonaws.com/media-p.slid.es/thumbnails/6622e4b4a2405ac8ddb0ba74f6761434/thumb.jpg">
+
+  </head>
+  <body>
+    
+    <div id="container" class="container">
+      <header class="global-header show-on-scroll">
+  <div class="wrapper">
+    <h1 class="logo-animation">
+      <a class="symbol" href="/">
+        <div class="box-1"></div>
+        <div class="box-2"></div>
+        <div class="box-3"></div>
+      </a>
+      <a class="word" href="/"></a>
+    </h1>
+    <ul class="nav nav-long">
+        <li class="nav-item" data-page-id="home/explore">
+          <a class="nav-item-anchor" href="/explore"><span class="nav-item-label">Explore</span></a>
+        </li>
+        <li class="nav-item" data-page-id="static/features">
+          <a class="nav-item-anchor" href="/features"><span class="nav-item-label">Features</span></a>
+        </li>
+        <li class="nav-item" data-page-id="static/pricing">
+          <a class="nav-item-anchor" href="/pricing?h=1"><span class="nav-item-label">Pricing</span></a>
+        </li>
+        <li class="nav-item-divider"></li>
+        <li class="nav-item" data-page-id="sessions/new">
+          <a class="nav-item-anchor" href="/users/sign_in"><span class="nav-item-label">Log in</span></a>
+        </li>
+        <li class="nav-item nav-item-highlighted nav-item-secondary" data-page-id="static/pricing">
+          <a class="nav-item-anchor" href="/pricing"><span class="nav-item-label">Sign up</span></a>
+        </li>
+    </ul>
+  </div>
+</header>
+
+      
+      <div id="main" class="main" role="main">
+        
+
+
+
+
+<div class="marquee">
+
+	<div class="reveal-frame">
+		<div class="reveal-viewport theme-font-montserrat theme-color-silver-green">
+			<div class="reveal">
+				<div class="slides">
+					<section data-id="7f9017f1fbd2d82810b9136c0294c7cc" data-background-image="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1870459/starlight.jpg"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 250px; height: auto;" data-block-id="c4b0a44624f87ad565dcb28e55a8b6a1"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" dir="ui" style="z-index: 11;">
+<h1><span style="color:#FFFFFF">Pointer 指標</span></h1>
+
+<p><span style="color:#FFFFFF"><span style="font-size:1.6em">C 語言最絢爛的星星</span></span></p>
+
+<p> </p>
+</div></div>
+
+<div class="sl-block" data-block-type="text" style="width: 196px; left: 684px; top: 448px; height: auto;" data-block-id="9d4380a93c977eb0e4c1f4f6949b73c1"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" dir="ui" style="z-index: 12;">
+<pre><span style="color:#FFFFFF">陳杰翰 JIElite</span></pre>
+</div></div></section><section data-id="a97e7f02940875d54b5ee9cfe54c0e60"><div class="sl-block" data-block-type="text" style="width: 800px; left: 86px; top: 319px; height: auto;" data-block-id="a3beadc428eb5ed5953158afd0e78450"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<p><font size="7">指標是 C 語言最美麗的特色</font></p>
+</div></div></section><section data-id="f2cb693c6fa0eb1f187c04df2f24d5c9"><div class="sl-block" data-block-type="text" style="width: 946px; left: 7px; top: 271px; height: auto;" data-block-id="138a722e0edcc2781d7c0fdf615f7667"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2>指標一點都不可怕！</h2>
+
+<h2>而且指標非常強大！！！</h2>
+</div></div></section><section data-id="6b1fc6d02562b1b7303f7b65e2b8ac6f"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 313px; height: auto;" data-block-id="a5117d6addd1bc0bc3e5f8fce538bb6c"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2>摸透指標就是摸透 C 語言</h2>
+
+<p>摸透 C 語言... 下略</p>
+</div></div></section><section data-id="b8165780c674b24ecddb0009914f8d91"><div class="sl-block" data-block-type="text" style="width: 898px; left: 31px; top: 234px; height: auto;" data-block-id="5eb6f9d633309d867996ad6e2832f9c4"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: center;">
+<h2>你有沒有想過要怎麼</h2>
+
+<h2>利用 function 修改 main function 中的變數？</h2>
+</div></div></section><section data-id="7e6ee65a94ddd290368799a7d5cc3d89"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 253px; height: auto;" data-block-id="a4e5ab616e17816abd4dc9e5a83e4465"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h1><span style="font-size:0.7em">要怎麼將 array 傳入 function?並且進一步做使用？</span></h1>
+</div></div></section><section data-id="50d707d2cc2707be31787c3a5d73d67b"><div class="sl-block" data-block-type="text" data-block-id="d0fde9813728746b4dcd2b88c917e4a4" style="height: auto; min-width: 30px; min-height: 30px; width: 734px; left: 113px; top: 276px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2>讓我們一起來打敗魔王吧！（戰勝 C 指標）</h2>
+</div></div></section><section data-id="d4d09db7bde25c9529733d3ab6064ff1"><div class="sl-block" data-block-type="image" data-block-id="47f4c0c10668b5326d8988c1606bd5a2" style="min-width: 30px; min-height: 30px; width: 683.2px; height: 427px; left: 139px; top: 165px;"><div class="sl-block-content" style="z-index: 11;"><img style="" data-natural-width="1440" data-natural-height="900" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1870415/20131116_435d5180e3bb77f76216drD5JmmMuvud.jpg"></div></div>
+<div class="sl-block" data-block-type="text" data-block-id="74b42734a1ab24b227768f0bfd193691" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 172px; top: 101px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<h3>但是我們的魔王才沒有這麼可愛</h3>
+</div></div></section><section data-id="1b1e744ad2e213b7573000c551fc24da"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 210px; height: auto;" data-block-id="c207e3d8360488032bd9f98d3024a6aa"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2>Pay Attention</h2>
+
+<h2>&amp;</h2>
+
+<h2>隨時發問</h2>
+</div></div></section><section data-id="5b399a68cbb551924faae210518e976f"><div class="sl-block" data-block-type="text" data-block-id="8f86232caa57dc3f45fe79c3259e72a5" style="height: auto; min-width: 30px; min-height: 30px; width: 810px; left: 80px; top: 300px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<p><span style="font-size:1.2em">我們的內容將著重在 Pointer 的使用</span></p>
+
+<p><span style="font-size:1.2em">在進入正式課程之前，我們先來介紹一下先備知識</span></p>
+</div></div></section><section data-id="5a585f62152086ed56c25f3939906d9a"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 245px; height: auto;" data-block-id="7deff0f36836140b802285a388cd3e18"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h3 style="text-align:left">​​C 語言，是用來操作硬體設備與設計作業系統的。相較於 Java, Python 等程式語言，需要自己管理程式使用的記憶體，其方法就是使用</h3>
+
+<h3>指標 ( pointer ) </h3>
+</div></div></section><section data-id="4f42a664ac031bdceeef1876ba09121d"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 270px; height: auto;" data-block-id="d409736e4ffe71c85e628e010ef8e0bf"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h3>此外，在 C 語言中很重要的是數值的概念</h3>
+
+<p>任何變數存放的都只是一個<span style="color:#FF0000">數值</span></p>
+</div></div></section><section data-id="59491332cc236df5c4c2e1f1b02b1f4c"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 253px; height: auto;" data-block-id="5454740f098a5d0e9e2763fcbda0610b"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h1>我們先來瞭解一下記憶體吧！</h1>
+</div></div></section><section data-id="3c54c30223153325c4c75d6fb5a913de"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="3c37153b733e8363616038d354da08ab"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>資料究竟存放在哪裡呢？</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 815px; left: 73px; top: 204px; height: auto;" data-block-id="6651bfbc0aa865f79de5d390db6ae9dc"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<p style="text-align:left"><span style="font-size:0.9em">變數，陣列都是在程式中用來<u>儲存資料（數值）</u>的。</span></p>
+
+<p style="text-align:left"><span style="font-size:27px">變數和陣列是什麼呢？在 C 語言中，變數和陣列是一個對應到記憶體的別名。他們對應到某記憶體區塊，就好像幫某個記憶體區塊取名子一樣。所以我們的資料（數值）實際上是儲存在這些記憶體區塊中。</span></p>
+
+<p style="text-align:left">以下取自 wiki<span style="color:rgb(20, 24, 35); text-align:left">pedia</span>: </p>
+
+<p style="text-align:left"><span style="color:rgb(37, 37, 37); text-align:start">In </span><a href="https://en.wikipedia.org/wiki/Computer_programming" target="_blank">computer programming</a><span style="color:rgb(37, 37, 37); text-align:start">, a </span><strong>variable</strong><span style="color:rgb(37, 37, 37); text-align:start"> or </span><strong>scalar</strong><span style="color:rgb(37, 37, 37); text-align:start"> is a </span><a href="https://en.wikipedia.org/wiki/Memory_location" target="_blank">sto-rage location</a><span style="color:rgb(37, 37, 37); text-align:start"> paired with an associated </span><a href="https://en.wikipedia.org/wiki/Symbol" target="_blank">symbolic name</a><span style="color:rgb(37, 37, 37); text-align:start"> </span></p>
+
+<p style="text-align:left"><span style="color:rgb(37, 37, 37); text-align:start">(an </span><em><a href="https://en.wikipedia.org/wiki/Identifier_(computer_programming)" target="_blank">identifier</a></em><span style="color:rgb(37, 37, 37); text-align:start">), which contains some known or unknown quantity of information referred to as a </span><em><a href="https://en.wikipedia.org/wiki/Value_(computer_science)" target="_blank">value</a></em><span style="color:rgb(37, 37, 37); text-align:start">. </span></p>
+
+<p style="text-align:left">p.s <a href="http://programmers.stackexchange.com/questions/238033/what-does-it-mean-when-data-is-scalar" target="_blank">What does it mean when data is scalar?</a></p>
+</div></div></section><section data-id="9e3f81ec3a3e1660614db4a3932843f6"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="ad02d031fba17e1bf4b332eff934cc34"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2>資料究竟存放在哪裡呢？</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 815px; left: 55px; top: 210px; height: auto;" data-block-id="b99f74de319870c2c25c7fcb9753d9b6"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;" dir="ui">
+<p style="text-align:left">在大部分的電腦，儲存資料所佔用的空間是以 byte 作為儲存的單位。</p>
+
+<p style="text-align:left"> </p>
+
+<p style="text-align:left">以 C 語言為例：char 是最小的儲存型別，會在記憶體中佔用 1 byte 的空間。其餘型別則會依照電腦的系統架構而有所不同。</p>
+</div></div></section><section data-id="bb44160bf4e7e870ad6e2c4c65b98990"><div class="sl-block" data-block-type="text" style="width: 800px; left: 28px; top: 115px; height: auto;" data-block-id="7772a4b68eb2732dd83955db603cbedd"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Subtitle" style="z-index: 11;">
+<pre style="text-align: center;"><span style="font-size:1.4em">以4GB記憶體為例</span></pre>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="107b41bc507d1d870cd0fee48ac45e54" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 128px; top: 185px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 10;">
+<p style="text-align:left"><span style="font-size:0.7em">K 代表: </span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">M代表: </span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">G 代表: </span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">這裡的 B 指的是 Byte, 不是 Bit</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">4G 代表 4 *          = </span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">4GB 的意思就是記憶體有         個 Bytes</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">並且每一個 Byte 都有自己對應的位址</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">（ 1 Byte = 8 bits, 所以可以看到 8 個 0 or 1） </span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="331724bcb3c70a07470c283340c8fc67" style="min-width: 30px; min-height: 30px; width: 253.67921440261867px; height: 327px; left: 560px; top: 191px;"><div class="sl-block-content" style="z-index: 12;"><img style="" data-natural-width="474" data-natural-height="611" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1870272/_____2015-10-24___8.02.41.png"></div></div>
+<div class="sl-block" data-block-type="math" data-block-id="718192308d0533f0e2b42400e50b0a12" style="width: auto; height: auto; min-width: 30px; min-height: 30px; left: 208px; top: 188px;"><div class="sl-block-content" style="z-index: 13; font-size: 60%;">
+<div class="math-input">2^{10}</div>
+<div class="math-output"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mrow><mn>1</mn><mn>0</mn></mrow></msup></mrow><annotation encoding="application/x-tex">2^{10}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.8141079999999999em;"></span><span class="strut bottom" style="height: 0.8141079999999999em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathrm">2</span><span class="vlist"><span class="" style="top: -0.363em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">0</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span></span></span></div>
+</div></div>
+<div class="sl-block" data-block-type="math" data-block-id="6edecde70130aabcf6cf63a9d56df323" style="width: auto; height: auto; min-width: 30px; min-height: 30px; left: 209px; top: 233px;"><div class="sl-block-content" style="z-index: 14; font-size: 60%;">
+<div class="math-input">2^{20}</div>
+<div class="math-output"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mrow><mn>2</mn><mn>0</mn></mrow></msup></mrow><annotation encoding="application/x-tex">2^{20}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.8141079999999999em;"></span><span class="strut bottom" style="height: 0.8141079999999999em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathrm">2</span><span class="vlist"><span class="" style="top: -0.363em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">0</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span></span></span></div>
+</div></div>
+<div class="sl-block" data-block-type="math" data-block-id="5ac21cd79530206a87ee5c32d9e28ad5" style="width: auto; height: auto; min-width: 30px; min-height: 30px; left: 208px; top: 280px;"><div class="sl-block-content" style="z-index: 15; font-size: 60%;">
+<div class="math-input">2^{30}</div>
+<div class="math-output"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mrow><mn>3</mn><mn>0</mn></mrow></msup></mrow><annotation encoding="application/x-tex">2^{30}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.8141079999999999em;"></span><span class="strut bottom" style="height: 0.8141079999999999em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathrm">2</span><span class="vlist"><span class="" style="top: -0.363em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">0</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span></span></span></div>
+</div></div>
+<div class="sl-block" data-block-type="math" style="width: auto; height: auto; min-width: 30px; min-height: 30px; left: 247px; top: 374px;" data-block-id="7f7d0abe1d08379dcb40d73bb0dc20ee"><div class="sl-block-content" style="z-index: 16; font-size: 60%;">
+<div class="math-input">2^{30}</div>
+<div class="math-output"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mrow><mn>3</mn><mn>0</mn></mrow></msup></mrow><annotation encoding="application/x-tex">2^{30}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.8141079999999999em;"></span><span class="strut bottom" style="height: 0.8141079999999999em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathrm">2</span><span class="vlist"><span class="" style="top: -0.363em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">0</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span></span></span></div>
+</div></div>
+<div class="sl-block" data-block-type="math" data-block-id="c7d47f8fdfc2e031e09e166c0b52875d" style="width: auto; height: auto; min-width: 30px; min-height: 30px; left: 316px; top: 375px;"><div class="sl-block-content" style="z-index: 17; font-size: 60%;">
+<div class="math-input">2^{32}</div>
+<div class="math-output"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mrow><mn>3</mn><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">2^{32}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.8141079999999999em;"></span><span class="strut bottom" style="height: 0.8141079999999999em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathrm">2</span><span class="vlist"><span class="" style="top: -0.363em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">2</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span></span></span></div>
+</div></div>
+<div class="sl-block" data-block-type="math" style="width: auto; height: auto; min-width: 30px; min-height: 30px; left: 372px; top: 420px;" data-block-id="8c48f61fa9753aae3d81fccc9e3e36db"><div class="sl-block-content" style="z-index: 19; font-size: 60%;">
+<div class="math-input">2^{32}</div>
+<div class="math-output"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mrow><mn>3</mn><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">2^{32}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.8141079999999999em;"></span><span class="strut bottom" style="height: 0.8141079999999999em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathrm">2</span><span class="vlist"><span class="" style="top: -0.363em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">2</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span></span></span></span></div>
+</div></div></section><section data-id="9b0987789ddca5527100e210298ce21c"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 276px; height: auto;" data-block-id="ba0f9cd930dc2e826c2fcec641b79931"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2><span style="font-size:0.9em">在C語言，我們要怎麼取得這些資料在記憶體中的位址？</span></h2>
+
+<p><span style="font-size:0.9em">（即變數的位址）</span></p>
+</div></div></section><section data-id="98668d1cbe97fd5cae239f33508835c4"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 92px; height: auto;" data-block-id="50ef5bf266b7d399dd270fc4a85d761f"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;">
+<h1>&amp; operator</h1>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="2a05f451b76d58066793cf7d2b20505b" style="height: auto; min-width: 30px; min-height: 30px; width: 896px; left: 32px; top: 267px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left">我們可以利用 &amp; operator(<span style="color:#FF0000">referencing operator</span>)</p>
+
+<p style="text-align:left">來對我們的變數(variable) 或是 陣列(array) 做操作，來<span style="color:#FF0000">取得</span>變數 或是 陣列 在記憶體中的<span style="color:#FF0000">位址</span>。</p>
+
+<p style="text-align:left"> </p>
+</div></div></section><section data-id="d143df40d539f01f40d85247d283e7e3"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 92px; height: auto;" data-block-id="2efe999d5d51a39d4967248e663eda96"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11;">
+<h1>&amp; operator</h1>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="143e68014b3524c5990b723f2e3fd64a" style="height: auto; min-width: 30px; min-height: 30px; width: 756px; left: 109px; top: 189px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<ul>
+	<li>
+	<p><span style="font-size:0.7em">每一個程式中的資料，在記憶體中都佔有一個 byte 以上 的空間。</span></p>
+	</li>
+	<li>
+	<p><span style="font-size:0.7em">資料的第一個 byte 在記憶體儲存的位址，就稱作是那個資料在記憶體中的位址。（int 資料有 4 bytes, 取第一個 byte 的位址作為 int 變數的位址）</span></p>
+	</li>
+	<li>
+	<p><span style="font-size:0.7em">因此，對於一個 array 來說，array 的位址就是第一個 element 所使用的第一個 byte 的位址。( draw a graph ) </span></p>
+	</li>
+</ul>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="13d4113dd75c867bc5f8504a4939038d" style="min-width: 30px; min-height: 30px; width: 632.152px; height: 202px; left: 164px; top: 399px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="701" data-natural-height="224" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1870313/Array.png"></div></div></section><section data-id="7564b286253aefa02ee93c4bd81bb4a7"><div class="sl-block" data-block-type="text" style="width: 800px; left: 92px; top: 92px; height: auto;" data-block-id="eb0ac05797faa004e1dc80573c018d07"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;">
+<h1>小試身手 - 1</h1>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 743px; left: 109px; top: 185px; height: auto;" data-block-id="b2bfaad66d00fa1b47b6341b260b482a"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Subtitle" style="z-index: 11;">
+<pre style="text-align: center;">任務：觀察 a, b 的位址, 以及 array 的位址</pre>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="a33d98d66e0c2d05c0d61d07ee8f43b1" style="min-width: 30px; min-height: 30px; width: 721.9512195121952px; height: 325px; left: 120px; top: 247px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="1184" data-natural-height="533" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1870336/_____2015-10-24___8.33.20.png"></div></div></section><section data-id="f6699e0b5fda1daba3d62649eb53ff4c"><div class="sl-block" data-block-type="text" data-block-id="322474b1610f1acd972c96501c5656fa" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 188px; top: 125px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<p>小試身手 - 1 可以看出：</p>
+
+<ul>
+	<li style="color:rgb(17, 17, 17)">
+	<p><span style="font-size:0.7em">資料的第一個 byte 在記憶體儲存的位址，就稱作是那個資料在記憶體中的位址。（int 資料有 4 bytes, 取第一個 byte 的位址作為 int 變數的位址）</span></p>
+	</li>
+	<li style="color:rgb(17, 17, 17)">
+	<p><span style="font-size:0.7em">因此，對於一個 array 來說，array 的位址就是第一個 element 所使用的第一個 byte 的位址。( draw a graph ) <span style="font-size:0.7em"><span style="font-size:0.7em"><span style="font-size:0.7em"><span style="font-size:0.7em"><span style="font-size:0.7em"><span style="font-size:0.7em"><span style="font-size:0.7em"><span style="font-size:0.7em"><span style="font-size:0.7em">​</span></span></span></span></span></span></span></span></span></span></p>
+	</li>
+</ul>
+
+<p style="color:rgb(17, 17, 17); text-align:left"><span style="font-size:0.7em"><span style="font-size:0.7em"><span style="font-size:0.7em"><span style="font-size:0.7em"><span style="font-size:0.7em"><span style="font-size:0.7em"><span style="font-size:0.7em"><span style="font-size:0.7em"><span style="font-size:0.7em"><span style="font-size:0.7em">​</span></span></span></span></span></span></span></span></span></span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="f48cafeca0b175632eededc20e7434a1" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 200px; top: 401px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align: left;">想法：</p>
+
+<p style="text-align: left;"><span style="font-size:0.7em">&amp;array 是整個array的位址，取整個 array 第一個 byte</span></p>
+
+<p style="text-align: left;"><span style="font-size:0.7em">&amp;array[0] 是 array 中第一個元素(element) 的位址，取第一個元素的位址（會是第一個元素的第一個 byte 的位址）</span></p>
+</div></div></section><section data-id="980b617ecbe3b674446c2e22cdddf145"><div class="sl-block" data-block-type="text" style="width: 800px; left: 82px; top: 92px; height: auto;" data-block-id="f917543fbf1ccbae2b7d6eb450ff0d8a"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11;">
+<h1>小試身手 - 2</h1>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 743px; left: 109px; top: 195px; height: auto;" data-block-id="6116eb6b094cd44135b65dae7e38e618"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Subtitle" style="z-index: 12;">
+<pre style="text-align:left"><span style="font-size:0.9em">任務：請利用迴圈印出 array 每一個元素的位址並觀察他們之間有什麼關係？</span></pre>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="995b8a2bf108e77e98ae9d794ab202a3" style="min-width: 30px; min-height: 30px; width: 767.4890710382514px; height: 257px; left: 97px; top: 292px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="1093" data-natural-height="366" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1870345/_____2015-10-24___8.39.44.png"></div></div></section><section data-id="1fe4b41938e885327fadb6c462b7e20d"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 265px; height: auto;" data-block-id="8e2e625201c6c7b05df29c1a1d28fe88"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2><span style="font-size:0.7em">小試身手 - 2 說明</span></h2>
+
+<p><span style="font-size:0.7em">其實對於 array 來說，可以由位址看出來，只是在記憶體中的<span style="color:#FF0000"><strong>連續空間</strong></span>。</span></p>
+
+<p> </p>
+</div></div></section><section data-id="7ab9210e073741a93b14e441caebb6f2"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 234px; height: auto;" data-block-id="4ef4161dd8671569056dce8014d50726"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2>這些例子要看數值</h2>
+
+<h2>每次都要打 printf 印出來好麻煩喔～</h2>
+</div></div></section><section data-id="6c3803d3bfa4b3cfb5416d8d954edd41"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 270px; height: auto;" data-block-id="9cbe4f937654d0928bd1cf7faa440745"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2>一個高效率的程式設計師最重要的特質就是</h2>
+</div></div></section><section data-id="2676009f77606ba03a418cb07f8bf334"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 228px; height: auto;" data-block-id="c2443f30a55459c62030a6061a374f85"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;">
+<h1><span style="font-size:2.5em">懶</span></h1>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="aab3897a11b049b558cacbaf3d05b59f" style="min-width: 30px; min-height: 30px; width: 360px; height: 320.7920792079208px; left: 540px; top: 0px;"><div class="sl-block-content" style="z-index: 12;"><img style="" data-natural-width="1010" data-natural-height="900" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1881449/20150213061352891.png"></div></div></section><section data-id="4554237eadf17f7bca01ab96ab1e65de"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 270px; height: auto;" data-block-id="b90e1e8126c2d561d1322df8f16e5c3c"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11;">
+<h1>使用gdb觀看相關資訊</h1>
+</div></div></section><section data-id="2b387b9ea6ea730f8b7d8d513d90044a"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 313px; height: auto;" data-block-id="4fe0675812acd04718c668e902c4ecc2"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2>小試身手跟指標有什麼關係？</h2>
+</div></div></section><section data-id="6da0eeff57486be5dacd9d45823fc7aa"><div class="sl-block" data-block-type="text" style="width: 821px; left: 70px; top: 313px; height: auto;" data-block-id="5db4ac7425c81cc93135d3ea456fe114"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2><span style="font-size:0.9em">指標讓你透過記憶體位址來存取資料</span></h2>
+</div></div></section><section data-id="38633a244bf1763b4da9a5a8532c5386"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 253px; height: auto;" data-block-id="cd264a232da610a1708c58668411322b"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h3 style="text-align:left">今天我們要從記憶體中存取資料要先知道兩件事情：</h3>
+
+<p style="text-align:left">1. 從哪裡開始存取  -&gt;  位址</p>
+
+<p style="text-align:left">2. 一次存取的大小  -&gt;  指向多大的區塊，指向什麼東西</p>
+</div></div></section><section data-id="f68ae164df26f29b1ef94f58692e3ca2"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 270px; height: auto;" data-block-id="0c1805791d99019e7c81e249f117e50d"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h1>Q&amp;A 喝口水</h1>
+</div></div></section><section data-id="c4952fea6f1c7aca22f32037b5848709"><div class="sl-block" data-block-type="image" data-block-id="8fffc02db4e221a0ac35bdfb9d1ac0b4" style="min-width: 30px; min-height: 30px; width: 862.9893238434164px; height: 485px; left: 49px; top: 92px;"><div class="sl-block-content" style="z-index: 11;"><img style="" data-natural-width="500" data-natural-height="281" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1870401/5.jpg"></div></div></section><section class="stack" data-id="71f5903d3011db21128f0869eda9c5f5"><section data-id="a54c41242b9267f59868c1d282943e53"><div class="sl-block" data-block-type="text" style="width: 831px; left: 49px; top: 122px; height: auto;" data-block-id="ade5cfa81f28bd0e03a6f0fcf2f7befb"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left;">
+<h2>指標簡介</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 831px; left: 49px; top: 234px; height: auto;" data-block-id="6bf7d478da48b4de73d886dceaa17a60"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left;">
+<ul>
+	<li>
+	<p>指標是一種特殊的型別（就像 int, double, char 一樣）</p>
+	</li>
+	<li>
+	<p>指標<span style="color:#B22222">變數</span>的內容是：<span style="color:#B22222">記憶體位址</span></p>
+	</li>
+	<li>
+	<p>如何宣告一個指標呢？</p>
+	</li>
+	<li>
+	<p>指標如何初始化 (initalization) 與 賦值 (assignment) </p>
+	</li>
+	<li>
+	<p>如何使用？</p>
+	</li>
+</ul>
+</div></div></section><section data-id="1a11601bca88c16920e39585fbe9ef7c"><div class="sl-block" data-block-type="text" style="width: 836px; left: 58px; top: 90px; height: auto;" data-block-id="4d39819412058340de2f9da002c83c18"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 11;">
+<h2 style="text-align: center;">指標是一種特殊型別</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 443px; left: 18px; top: 202px; height: auto;" data-block-id="3a0fa76458f625ea721357f4d5542e33"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 12; text-align: left;" dir="ui">
+<ul>
+	<li>
+	<p><span style="font-size:0.7em">指標變數存的內容是記憶體位址，藉由指標可以存取記憶體中的資料相當於存取其他變數的內容。</span></p>
+	</li>
+</ul>
+
+<p> </p>
+
+<ul>
+	<li>
+	<p><span style="font-size:0.7em">指標變數的內容是記憶體位址，如果我們有方法能夠藉由記憶體位址存取到記憶體的某一個區域就能修改到該區域存放的內容。使用 dereferencing operator:  *  來存取記憶體中的內容</span></p>
+	</li>
+</ul>
+</div></div>
+<div class="sl-block" data-block-type="image" style="min-width: 30px; min-height: 30px; width: 484.492px; height: 363px; left: 476px; top: 197px;" data-block-id="0fdf15e9e20c0dcf4f0b4daf4f8cdfc6"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="985" data-natural-height="738" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1772569/_____2015-09-29___3.28.11.png"></div></div></section><section data-id="e27a68c8a1fcde1c0012335311b068d2"><div class="sl-block" data-block-type="text" data-block-id="6b5eac469d55dd7b360f6c6130523cfb" style="height: auto; min-width: 30px; min-height: 30px; width: 678px; left: 141px; top: 300px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h3><span style="font-size:1.0em">既然指標是一種型別，要使用指標型別的變數之前，也要宣告和初始化</span></h3>
+</div></div></section><section data-id="20bc2a322b54beab34b85c9ab6e59b13"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 87px; height: auto;" data-block-id="62010541cbf4debb7066ef0fdb3411ed"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2>指標的宣告與初始化</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 439px; left: 32px; top: 173px; height: auto;" data-block-id="2838b16cf54a819f31f0d703faef33e2"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;" dir="ui">
+<ul>
+	<li>
+	<p><span style="font-size:0.7em">指標的宣告必須要有</span></p>
+
+	<ul>
+		<li>
+		<p><span style="font-size:0.7em">指向的資料型別 ( referenc<strong>ed</strong> type )</span></p>
+
+		<ul>
+			<li>
+			<p><span style="font-size:0.7em">用來標記解讀記憶體資料的方式</span></p>
+			</li>
+			<li>
+			<p><span style="font-size:0.7em">也就是存取的記憶體空間<strong>大小</strong>​</span></p>
+			</li>
+		</ul>
+		</li>
+		<li>
+		<p><span style="font-size:0.7em">* 標記是指標型別</span></p>
+		</li>
+		<li>
+		<p><span style="font-size:0.7em"><span style="color:#FF0000">指標型別</span><span style="color:#008080">＋變數名稱</span></span></p>
+		</li>
+		<li>
+		<p><span style="font-size:0.7em">eg: <span style="color:#FF0000">int *</span><span style="color:#008080">ptr</span>;  <span style="color:#FF0000"> char *</span><span style="color:#008080">str</span>;   <span style="color:#FF0000">double *</span><span style="color:#008080">dptr</span>;</span></p>
+		</li>
+		<li>
+		<p><span style="font-size:0.7em">對於沒有用到的指標請初始化為 <span style="color:#FF0000">NULL</span></span></p>
+		</li>
+	</ul>
+	</li>
+</ul>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="f9801c05574b0d51b9f316d2feb01ac1" style="height: auto; min-width: 30px; min-height: 30px; width: 434px; left: 480px; top: 173px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<ul style="color:rgb(17, 17, 17)">
+	<li>
+	<p><span style="font-size:0.7em">指標的初始化</span></p>
+
+	<ul>
+		<li>
+		<p><span style="font-size:0.7em">將  變數的<strong><span style="color:rgb(255, 0, 0)">位址</span></strong>  初始化給  <span style="color:rgb(0, 128, 128)">指標變數</span></span></p>
+		</li>
+		<li>
+		<p><span style="font-size:0.7em">int number = 10;</span></p>
+		</li>
+		<li>
+		<p><span style="font-size:0.7em">int *<span style="color:rgb(0, 128, 128)">ptr</span> = <span style="color:rgb(255, 0, 0)"><strong>&amp;</strong></span>number; </span></p>
+		</li>
+	</ul>
+	</li>
+</ul>
+
+<p style="text-align: left;"><span style="font-size:0.7em">​&amp; number 實際上是類似 0x7ff..... 這樣的數值，利用 int *ptr = &amp;number 是將 0x7ff..... 這樣的數值，assign 給 ptr 這個指標變數。使指標變數的內容存放 0x7ff.....</span></p>
+</div></div></section><section data-id="814893334500cf3599f3e44cba6de42d"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 87px; height: auto;" data-block-id="396e07450ed137f2f9bd86e0b93459b1"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>指標的宣告與初始化</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 673px; left: 127px; top: 187px; height: auto;" data-block-id="825636363ff09a22ef6be7891782f26d"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;" dir="ui">
+<p style="text-align:left">What's NULL in C ? </p>
+
+<p style="text-align:left">NULL 表達的意思是：這個 pointer 沒有指向任何的東西。大多被定義的<span style="color:#FF0000">數值是 0</span> </p>
+
+<p style="text-align:left"> </p>
+
+<p style="text-align:left">參考資料:</p>
+
+<ul>
+	<li style="text-align:left">
+	<p><a href="http://www.c4learn.com/c-programming/c-null-pointer/" target="_blank">http://www.c4learn.com/c-programming/c-null-pointer/</a></p>
+	</li>
+	<li style="text-align:left">
+	<p>http://c-faq.com/null/</p>
+	</li>
+</ul>
+</div></div></section><section data-id="d79cf6d12ba5001ad46ad807930a6c4c"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 87px; height: auto;" data-block-id="872c715290d5d2e01f7f4e08e9dbba91"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>存取 NULL pointer</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 673px; left: 160px; top: 176px; height: auto;" data-block-id="f40a785df233b2dadea0a84a1d0e1594"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;" dir="ui">
+<p style="text-align:left"><span style="font-size:0.7em"><span>這一段是補充內容，希望大家看完這份投影片後再回來觀看。</span></span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">關鍵字：dereferencing null pointer</span></p>
+
+<ul>
+	<li style="text-align:left">
+	<p><span style="font-size:0.7em">https://www.quora.com/What-actually-happens-when-dereferencing-a-NULL-pointer</span></p>
+	</li>
+	<li style="text-align:left">
+	<p><span style="font-size:0.7em">http://stackoverflow.com/questions/4007268/what-exactly-is-meant-by-de-referencing-a-null-pointer</span></p>
+	</li>
+</ul>
+
+<p style="text-align:left"> </p>
+
+<p style="text-align:left"> </p>
+
+<p style="text-align:left"> </p>
+</div></div></section><section data-id="a178a634b5640d4dccab28c2f24f6fcc"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 87px; height: auto;" data-block-id="a7b37c1afa01e79173a174e4ac5af2b4"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>指標的宣告與初始化</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 673px; left: 144px; top: 163px; height: auto;" data-block-id="b4b27492a33e119283685593247bb18f"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<p style="text-align:left">初始化：</p>
+
+<p style="text-align:left">int number =  10;</p>
+
+<p style="text-align:left"><span style="color:#FF0000">int *</span><span style="color:#008080">ptr</span> = &amp;number; (假設是 0x7ffabc12)</p>
+
+<p style="text-align:left"> </p>
+
+<p style="text-align:left">上面的 <span style="color:#FF0000">int *</span> 整個是一個型別，<span style="color:#008080">ptr 才是變數</span>。int *的意思是：現在 ptr 這個變數存放的內容是記憶體位址(數值)，我們將從這個位址開始以 int 的角度來看待記憶體中的資料(從記憶體 0x7ffabc12 的位置開始有一個 4 bytes 的 int 資料)。</p>
+
+<p style="text-align:left">所以 int *ptr = &amp;number 是將 number 的位址初始化給 ptr 這個指標變數。</p>
+</div></div></section><section data-id="78d503e731390b8425de09e1dee864b3"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 87px; height: auto;" data-block-id="63fb2ac0a9a28443696651793d7824ca"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>指標的宣告與初始化</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 804px; left: 80px; top: 210px; height: auto;" data-block-id="a0b23a83294c282d9dd4385308a280d9"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<p style="text-align:left">當然，你也可以這樣做：</p>
+
+<p style="text-align:left"> </p>
+
+<p style="text-align:left">int *ptr = NULL;         // 先宣告了指標</p>
+
+<p style="text-align:left">int number = 10;       // 才宣告指向的變數</p>
+
+<p style="text-align:left">ptr = &amp;number;         // 將 number 的位址存到指標變數 ptr</p>
+</div></div></section><section data-id="ed11ec43dee67b136af1b8635340dfe1"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 87px; height: auto;" data-block-id="51773b13c87357bd2e4d9da34ec60c24"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>指標的宣告與初始化</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 804px; left: 80px; top: 210px; height: auto;" data-block-id="8d5851ea532111195f1756ddc49387f3"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<p style="text-align:left">combine:</p>
+
+<p style="text-align:left">int num = 10;</p>
+
+<p style="text-align:left">int *ptr = &amp;num;</p>
+
+<p style="text-align:left"> </p>
+
+<p style="text-align:left">int num = 10, *ptr = &amp;num;</p>
+</div></div></section><section data-id="97d9493ddfeba982b82a03886b646024"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 87px; height: auto;" data-block-id="666fcbc062e15e53e3896e12e129789f"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>指標的宣告與初始化</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 804px; left: 80px; top: 210px; height: auto;" data-block-id="c687bd21a71bd89c892a81ba94f9165c"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<p style="text-align:left">假如一次要宣告兩個指標變數：</p>
+
+<p style="text-align:left">int *ptr1, ptr2;</p>
+
+<p style="text-align:left">上面這樣是不行的，ptr2 會被認為是 int 變數</p>
+
+<p style="text-align:left">要使用：</p>
+
+<p style="text-align:left">int *ptr1, *ptr2;</p>
+
+<p style="text-align:left">int n1 = 10, n2 = 20;</p>
+
+<p style="text-align:left">ptr1 = &amp;n1, ptr2 = &amp;n2;</p>
+</div></div></section><section data-id="13e2a74f65097daa7acb360cb73f4172"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 288px; height: auto;" data-block-id="7a2849e71e3d8d1e4d71a5d562d23da6"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2>指標指向一個變數是什麼意思？</h2>
+
+<p>What does a pointer variable point to variable mean?</p>
+</div></div></section><section data-id="e545d919b01620d79ee78cac2052107b"><div class="sl-block" data-block-type="text" style="width: 430px; left: 16px; top: 86px; height: auto;" data-block-id="57a7d598a4e1f908449f90db757fc28b"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left;" dir="ui">
+<h2>結合記憶體說明</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 430px; left: 24px; top: 174px; height: auto;" data-block-id="211875935dab0bec9fb10d906c094fd6"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 13; text-align: left;">
+<p><span style="color:#FF0000">try it: </span></p>
+
+<p><span style="font-size:0.7em">int  main(){</span></p>
+
+<p><span style="font-size:0.7em">  // It means <strong>pointer</strong> <strong>a</strong> <span style="color:#FF0000">points to</span> <strong>variable b</strong>.</span></p>
+
+<p><span style="font-size:0.7em">           int b = 10;   </span></p>
+
+<p><span style="font-size:0.7em">           int *a = &amp;b;</span></p>
+
+<p><span style="font-size:0.7em">    // a's content is  1008, b's address is 1008</span></p>
+
+<p><span style="font-size:0.7em">    // <strong>*a is b's content </strong>itself.</span></p>
+
+<p><span style="font-size:0.7em">   //  if b is 10, *a is 10.</span></p>
+
+<p><span style="font-size:0.7em">       printf("%d\n", *a);</span></p>
+
+<p><span style="font-size:0.7em">}</span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" style="width: 518.1388888888889px; height: 575px; left: 432px; top: 70px;" data-block-id="c9bffa9ae4ff35dab22169a8e77ed4af"><div class="sl-block-content"><img style="" data-natural-width="811" data-natural-height="900" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1772576/2000px-Pointers.svg.png"></div></div></section><section data-id="28c999ca45b8d3db3c3e57571312f443"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 169px; height: auto;" data-block-id="fb08dd36ab836810e111ec1ba611e93a"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;">
+<h3><span style="font-size:1.0em">如果指標變數 a 記錄了 變數 b 的位址，就稱作 指標 a 指向 b</span></h3>
+
+<p style="text-align:left">ex:  char c  = 'a';   char *cptr = &amp;c;   cptr 指向 c !!</p>
+
+<p style="text-align:left">宣告時把 *cptr 看在一起(其餘搭配優先權)，表示他是指標變數，再由內往外拆開解析。</p>
+
+<p style="text-align:left"><span style="color:#008080">char</span><span style="color:#FF0000"> (*cptr) ,  指標變數 </span><span style="color:#000000">指向 </span><span style="color:#008080">char型別的變數</span></p>
+
+<p style="text-align:left"> </p>
+</div></div></section><section data-id="70caeed5b2528864934ecac4a6bc7ee4"><div class="sl-block" data-block-type="text" style="width: 800px; left: 89px; top: 303px; height: auto;" data-block-id="7400375d501719a98b531d217c82301d"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11;">
+<h3>看完剛剛的例子你一定很困惑，</h3>
+
+<h3>因為不知道 * 到底是什麼？</h3>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="ea7645b90cbbf0e3482143762e43e826" style="height: auto; min-width: 30px; min-height: 30px; width: 603px; left: -186px; top: 210px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p>＊出現在宣告：</p>
+
+<p>int *ptr = NULL:</p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="5159de765735506858fda21feaa94494" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 432px; top: 214px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p>存取數值：printf("%d\n", *ptr);</p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="47df7a4aa961245104d406d5f25486cd" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 100px; top: 129px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14;">
+<p>* 也可以當作乘法！</p>
+</div></div></section><section data-id="559324f19665c0cc289af3723a9fc122"><div class="sl-block" data-block-type="text" style="width: 800px; left: 61px; top: 103px; height: auto;" data-block-id="ac2647f0922902b42969836f2a52053a"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>* 的角色</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 202px; height: auto;" data-block-id="8c9f7b96298dc1ae8beccbe38b90fecd"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" dir="ui">
+<ul>
+	<li>
+	<p><span style="font-size:0.7em">在<span style="color:#FF0000">宣告的時候</span>，表示指標型別，前面必須接上一個<strong><span style="color:#FF0000">型別</span></strong> ，代表 C 語言會如何看待這些記憶體位址中的資料。 ( ex: 資料長度 char: 1,  double: 8 bytes )</span></p>
+
+	<ul>
+		<li>
+		<p><span style="font-size:0.7em">eg: <span style="color:#FF0000"><em><strong>char</strong></em></span> *ptr = str;</span></p>
+		</li>
+		<li>
+		<p><span style="font-size:0.7em">eg: <span style="color:#FF0000"><em><strong>double</strong></em></span> *dptr = &amp;double;</span></p>
+		</li>
+	</ul>
+	</li>
+	<li>
+	<p><span style="font-size:0.7em">當作取值運算子( dereferencing operator )</span></p>
+
+	<ul>
+		<li>
+		<p><span style="font-size:0.7em">只有搭配一個<strong><span style="color:#FF0000">已知的指標變數</span></strong>才是這樣使用</span></p>
+		</li>
+		<li>
+		<p><span style="font-size:0.7em">eg: int number = 10;  int *<span style="color:#000000">ptr</span> = &amp;number;</span></p>
+		</li>
+		<li>
+		<p><span style="font-size:0.7em">*<span style="color:#FF0000"><em><strong>ptr</strong></em></span> = 20;  // The number will be 20 !</span></p>
+		</li>
+	</ul>
+	</li>
+	<li>
+	<p><span style="font-size:0.7em">大家熟悉的乘法運算子</span></p>
+	</li>
+</ul>
+</div></div></section><section data-id="52b36c73ba20691ad1abf5fb7111366b"><div class="sl-block" data-block-type="text" style="width: 430px; left: 12px; top: 87px; height: auto;" data-block-id="adf257049b57f293564e55a452e0cb15"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 11;">
+<h2>回到記憶體長河</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 430px; left: 25px; top: 187px; height: auto;" data-block-id="2ff16d7b27deefe58941bb72544b1ba1"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec metus justo. Aliquam erat volutpat." style="z-index: 13; text-align: left;">
+<p><span style="font-size:0.7em">int  main(){</span></p>
+
+<p><span style="font-size:0.7em">// 這裡的 * 是用在宣告所以標記 a 是指標型態</span></p>
+
+<p><span style="font-size:0.7em">           int b = 10;   </span></p>
+
+<p><span style="font-size:0.7em">           int *a = &amp;b;   </span></p>
+
+<p><span style="font-size:0.7em">// 下面的 *a 因為已經知道 a 是一個指標變數</span></p>
+
+<p><span style="font-size:0.7em">/* 所以下面的  * 搭配指標變數指的是取記憶體位址是 1008 中的 content !    */ </span></p>
+
+<p><span style="font-size:0.7em">       printf("%d\n", *a);</span></p>
+
+<p><span style="font-size:0.7em">}</span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" style="width: 511.8311111111111px; height: 568px; left: 442px; top: 79px;" data-block-id="cd6b12fda7d0c0b97f8e83e5726db99f"><div class="sl-block-content" style="z-index: 12;"><img style="" data-natural-width="811" data-natural-height="900" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1772576/2000px-Pointers.svg.png"></div></div></section><section data-id="36740ea824f27a601aebee6ba9ea7aab"><div class="sl-block" data-block-type="text" style="height: auto; min-width: 30px; min-height: 30px; width: 933px; left: 15px; top: 103px;" data-block-id="b233bf7337c85282f48535cecbfee728"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2>但是課本的圖都是這樣</h2>
+</div></div>
+<div class="sl-block" data-block-type="image" style="min-width: 30px; min-height: 30px; width: 706.7972972972973px; height: 271px; left: 127px; top: 231px;" data-block-id="0636ad39e7bbf491a1cb0980a1112619"><div class="sl-block-content" style="z-index: 12;"><img style="" data-natural-width="579" data-natural-height="222" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1772712/PointerDeclaration.png"></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 181px; top: 541px;" data-block-id="08dfbb81b6fa542c1c75fe366cf8711c"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p>所以更加抽象難懂... Q_Q</p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="d8d210b7e7db3a9087518987547793b3" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 20px; top: 191px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14;">
+<p> 注意 &amp;number 的型別是 (int *)</p>
+</div></div></section><section data-id="620215c86ac0f79dd2e3a06bf734c47e"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 91px; height: auto;" data-block-id="9012d88ecf824c511259d551787ca9a1"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>先前說過指標是一個特殊型別</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 817px; left: 89px; top: 203px; height: auto;" data-block-id="272b4e6ad271a18ebc0feef322392e8f"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text">
+<ul>
+	<li>
+<p><span style="font-size:0.7em">因為指標可以指向各種型別的資料</span></p>
+<ul>
+		<li><p><span style="font-size:0.7em">eg: int (*ptr);  ptr 指向 int 資料</span></p></li>
+		<li><p><span style="font-size:0.7em">eg: double (*dptr);  dptr 指向 double 資料</span></p></li>
+		<li><p><span style="font-size:0.7em">eg: char (*str);  str 指向 char 資料</span></p></li>
+		<li><p><span style="font-size:0.7em">eg: void (*ptr);  ptr 指向不知道類型的指標 </span></p></li>
+	</ul>
+	</li>
+	<li>
+<p><span style="font-size:0.7em">指標也可以指向  指標類型 的資料</span></p>
+<ul>
+		<li><p><span style="font-size:0.7em">eg:  int *(*iptr);  iptr 指向一個指標(該指標指向int資料)</span></p></li>
+	</ul>
+	</li>
+	<li><p><span style="font-size:0.7em">因為指標可以指向這麼多種類型的資料，所以可作複雜的存取動作！</span></p></li>
+</ul>
+</div></div></section><section data-id="960f6a15304d80cc118751d3cba7b9d4"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 92px; height: auto;" data-block-id="b57a6da08a896c7c53a848d328d5cf06"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;">
+<h1> Recall * and &amp;</h1>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="5add57901bd41705ee8fcfb30cfb5e37" style="height: auto; min-width: 30px; min-height: 30px; width: 666px; left: 180px; top: 210px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left">&amp;: referencing operator，用來取得變數的位址</p>
+
+<p style="text-align:left">*:  dereferencing operator，從記憶體位址中存取變數的內容</p>
+
+<p style="text-align:left"> </p>
+
+<p style="text-align:left">如果是這樣呢？</p>
+
+<p style="text-align:left">int number = 10;</p>
+
+<p style="text-align:left">printf("%d\n",  *&amp;number);</p>
+
+<p style="text-align:left">printf("%d\n",  &amp;*number); </p>
+</div></div></section><section data-id="aa702833e4b8fb8338356b730d30a37a"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 92px; height: auto;" data-block-id="747a61c09db9428393536fb383fe52f5"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;">
+<h1> * and &amp;</h1>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 766px; left: 104px; top: 189px;" data-block-id="c2e01ded9c1d5d098968fce2b151abf8"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left">int number = 10;</p>
+
+<p style="text-align:left">printf("%d\n",  *&amp;number);</p>
+
+<p style="text-align:left">對編譯器來說 &amp;number 是一個 int * 型別，所以可以編譯成功，並且在對這個 int * 型別的資料做 <span style="color:#FF0000">dereferencing</span> ( <span style="color:#FF0000">*</span> (&amp;number) )  is 10</p>
+
+<p style="text-align:left"> </p>
+
+<p style="text-align:left">printf("%d\n",  &amp;*number); </p>
+
+<p style="text-align:left">對編譯器來說 number 是 int 型別，所以 *number 無法編譯</p>
+</div></div></section><section data-id="8cd53223efa080167622f07b79af7539"><div class="sl-block" data-block-type="text" data-block-id="2cd024948e5c4be187c108e1af14f886" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 180px; top: 92px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2><span style="color:#000000">小試身手 - 3</span></h2>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="2828abe4f74753856d7fc590f2edc94e" style="height: auto; min-width: 30px; min-height: 30px; width: 711px; left: 126px; top: 171px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p>在這裡，要請你們使用指標來修改變數number內容</p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="8383e6847a3583c905641ef32709da63" style="min-width: 30px; min-height: 30px; width: 684.1437007874015px; height: 355px; left: 139px; top: 231px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="979" data-natural-height="508" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1870379/_____2015-10-24___9.18.12.png"></div></div></section><section data-id="45d07c1a76fbdec3c927dff38ebc55be"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 110px; height: auto;" data-block-id="f296d8a187a4416d55f86e598070b110"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 10;">
+<h3><span style="font-size:1.2em">指標搭配 const 來使用</span></h3>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="68d11d1e6cf1afe9bc22ae9def21e92a" style="height: auto; min-width: 30px; min-height: 30px; width: 367px; left: 88px; top: 191px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<p style="text-align:left"><u><span style="font-size:0.7em">型式一：指標變數指向 const 資料</span></u></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">int num = 10;</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em"><u><span style="color:#FF0000">const</span> int</u> *ptr = &amp;num;</span>    or</p>
+
+<p style="text-align:left"><span style="font-size:0.7em"><u>int <span style="color:#FF0000">const</span></u><span style="color:rgb(17, 17, 17); text-align:left"> *ptr = &amp;num;</span></span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">代表 指標指向 <u>const 型別</u>的資料，所以我們不能夠用指標來更改所指向的內容</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">*ptr = 10;   // 這樣是錯誤的！</span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 432px; left: 474px; top: 191px;" data-block-id="6e07f5edff8d3901325369aa2432ed8e"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;" dir="ui">
+<p style="text-align:left"><u><span style="font-size:0.7em">形式二：指標變數自身是 const</span></u></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">int n1 = 10;</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">int n2 = 20;</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">int * <span style="color:#FF0000">const</span> ptr = &amp;n1;</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">代表這個 指標變數是 const 的，只能 assign 一次。</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">ptr = &amp;n2;   // 這樣是錯誤的！</span></p>
+</div></div></section><section data-id="fdc3f8daebe1fa360b8d3531c2e895a6"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 270px; height: auto;" data-block-id="1bd127446b07221bdb4a57e9371c3303"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h3>先前看到的都是一個 pointer 指向一個變數，能夠多個 pointer 指向同一個變數嗎？</h3>
+</div></div></section><section data-id="d794826b2a856787dcb109d59831141a"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 116px; height: auto;" data-block-id="0a49daa0c89e7d43bc4adfa668b15968"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2>多個 pointer 指向同一個變數</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="7ec3ea1574b10ae8b6928afc9a1a56bb" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 164px; top: 185px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p>（常見於使用 linked list 時）</p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="0efa8fb561e7a574b3a6f9ba9682c633" style="min-width: 30px; min-height: 30px; width: 660px; height: 408.96162528216706px; left: 150px; top: 231px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="886" data-natural-height="549" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1870451/_____2015-10-24___10.39.16.png"></div></div></section><section data-id="fda8000ccd642822c3b72819e31da681"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 288px; height: auto;" data-block-id="7b671928003b3e22a9ea52d5f866d635"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2>Congratulations!</h2>
+
+<p>你已經通過了第一關了！</p>
+</div></div></section><section data-id="998901633c9237266109f6cab3efb34d"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 173px; height: auto;" data-block-id="e7b0cd63b39524a13a9ff184b6bf80fb"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>現在你學會的技能</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 292px; height: auto;" data-block-id="ca479322266018e665e495eed1133687"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text">
+<ul>
+	<li><p>簡略的記憶體概念</p></li>
+	<li><p>指標的宣告以及初始化</p></li>
+	<li><p>利用取值運算子來存取指到的資料內容</p></li>
+</ul>
+</div></div></section><section data-id="476dfccc2803d3318f105c0898b08b92"><div class="sl-block" data-block-type="text" data-block-id="5fa97c7fd7f5d37eb7f4d602403f49d6" style="height: auto; min-width: 30px; min-height: 30px; width: 797px; left: 94px; top: 210px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h1>人生最重要的就是這個BUT!!!!!</h1>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="7b61b56beedc27d5e02ab44a955c3853" style="min-width: 30px; min-height: 30px; width: 360px; height: 228.34285714285713px; left: 18px; top: 404px;"><div class="sl-block-content" style="z-index: 12;"><img style="" data-natural-width="350" data-natural-height="222" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1870393/2122121R9-23.png"></div></div></section><section data-id="36cb633a701045f2a19041e7ff395830"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 270px; height: auto;" data-block-id="610e59b2a1bf2b53e77921e16776e3b0"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h3><span style="color:rgb(17, 17, 17)">我們剛剛更改變數 number 的數值，可以不用指標就能夠辦到拉！指標到底有什麼用呢？</span></h3>
+</div></div></section><section data-id="b386cb660ec6c7330dc29a560773a448"><div class="sl-block" data-block-type="image" data-block-id="d8b18b4602a9ffdaa6950c11731356e4" style="min-width: 30px; min-height: 30px; width: 660px; height: 470.8px; left: 150px; top: 89px;"><div class="sl-block-content" style="z-index: 11;"><img style="" data-natural-width="600" data-natural-height="428" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1870418/d713219.jpg"></div></div></section><section data-id="f2d0ece7cb69c62a2184c1db7a21cd36"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 270px; height: auto;" data-block-id="741c97275f01ef90df461dc0ba0053e9"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h1>再加把勁</h1>
+</div></div></section></section><section class="stack" data-id="c5dc46b9b16b28b87c0421231699ef62"><section data-id="a8d12ccadce9562f0f492df9e30f7a1d"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="ac2ae8bf11043ae4719bfa3941410a5b"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>指標常見基礎應用</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 113px; top: 204px; height: auto;" data-block-id="f0ec8d2f1ddbf067c0965aa8c2bb7055"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<p><span style="font-size:0.9em">Type1: Function 可以修改 Function 外的變數</span></p>
+
+<p><span style="font-size:0.9em">Type2: 傳遞<span style="color:#FF0000">連續</span>的記憶體資料。(array, string)</span></p>
+
+<p style="text-align:left"><span style="font-size:0.9em">Why? </span></p>
+
+<ul>
+	<li style="text-align:left">
+	<p><span style="font-size:0.9em">Type1: 只要我們知道資料存在記憶體的哪一個位址，利用這個位址，我們就可以去直接更改資料！</span></p>
+	</li>
+	<li style="text-align:left">
+	<p><span style="font-size:0.9em">Type2:  在 C 語言，傳遞參數給 function 的時候，都將 copy 參數的內容一次。可是我們傳遞一整個 array 總不會也全部複製一次！</span></p>
+	</li>
+</ul>
+</div></div></section><section data-id="e69a5df1198cfda498f3a9f153601d6a"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 87px; height: auto;" data-block-id="0a6ecf83152778119d6118fd54d02cf1"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2>Function 傳遞變數的機制</h2>
+</div></div>
+<div class="sl-block" data-block-type="image" style="min-width: 30px; min-height: 30px; width: 422.9106699751861px; height: 261px; left: 57px; top: 229px;" data-block-id="ff523404695d9b156f3ab396efeb7f5b"><div class="sl-block-content" style="z-index: 12;"><img style="" data-natural-width="653" data-natural-height="403" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1772841/_____2015-09-29___4.33.07.png"></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; min-width: 30px; min-height: 30px; width: 381px; left: 499px; top: 193px;" data-block-id="d6379a82a4315040cbf2de6c8a78d4f0"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p style="text-align:left"><span style="font-size:0.7em">call getValue 的時候：</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">傳入 v 的變數</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">相當於以下行為：</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">int getValue(){</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">        int value = 10;</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">        return value;</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">}</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">只是單純從記憶體中找到 v 的 content 再把這個 content 複製給 value 變數</span></p>
+</div></div></section><section data-id="eb1713646a014b21136f308aab894e55"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 85px; height: auto;" data-block-id="a763dd237cc83c12fd6367d9f6e366c8"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2>Function 傳遞變數的機制</h2>
+</div></div>
+<div class="sl-block" data-block-type="image" style="min-width: 30px; min-height: 30px; width: 422.9106699751861px; height: 261px; left: 29px; top: 243px;" data-block-id="0c7b6b85cdc1d71b40a52191af50158b"><div class="sl-block-content" style="z-index: 12;"><img style="" data-natural-width="653" data-natural-height="403" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1772841/_____2015-09-29___4.33.07.png"></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; min-width: 30px; min-height: 30px; width: 381px; left: 480px; top: 243px;" data-block-id="e34a67d6ed34b9c996a96c8239ce9db0"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p style="text-align:left"><span style="font-size:0.7em">因為只是單純的將數值<span style="color:#FF0000">複製</span>給 value 變數。所以，我們在 function 內部更改 value 變數的數值都無法影響到外面變數的內容～</span></p>
+
+<p style="text-align:left"><span style="font-size:1.2em">╮(╯-╰)╭</span></p>
+
+<p style="text-align:left"> </p>
+</div></div></section><section data-id="099603626dffb40e6bcdeb4b5aa7deeb"><div class="sl-block" data-block-type="text" style="width: 800px; left: 89px; top: 94px; height: auto;" data-block-id="45ccc513eb2c9313ce0492c33b719074"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2>Function 傳遞變數的機制</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; min-width: 30px; min-height: 30px; width: 903px; left: 29px; top: 286px;" data-block-id="a6e2929ee9eddb6e86d36caec1536176"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p><span style="color:#000000">對</span>C語言<span style="color:#000000">來說</span>，傳遞參數給 function 都只是 copy <span style="color:#FF0000">數值</span>給 參數變數。</p>
+
+<p>只有 pass <span style="color:#FF0000">by value</span> 這種形式</p>
+
+<p>( value可以是一般數值，或是 address number )</p>
+</div></div></section><section data-id="b1b5c11bf8024c94aafca50f3b2f5a88"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 272px; height: auto;" data-block-id="59f2a2803d54b64e9d63787212fe7660"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h3>在 C 語言，只有數值的概念，變數儲存的資料都只是一個<span style="color:#FF0000">數值</span>
+</h3>
+</div></div></section><section data-id="ae03879d8f1d88bb681ff0c5c1f1a18d"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 270px; height: auto;" data-block-id="006b85148d851591f5a3be094393277a"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h3>如果我們天傳入的數值是 0x7ff..... 這樣的記憶體位址，我們就可以透過指標加以存取該位址存放的內容</h3>
+</div></div></section><section data-id="9f02afce1c901cd176d9a7291f1c4b6e"><div class="sl-block" data-block-type="text" style="width: 800px; left: 88px; top: 103px; height: auto;" data-block-id="d8d9f879c0a523cebb8b3778b7dbe329"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2>Function 傳遞變數的機制</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; min-width: 30px; min-height: 30px; width: 829px; left: 74px; top: 253px;" data-block-id="74e6bcb2c9cc6db8754c8d953126df04"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p>所以假如我們今天傳入的變數是——</p>
+
+<p>可以利用 dereference 機制索引到記憶體內容的指標變數呢？</p>
+
+<p>（也就是傳入記憶體位址的數值）</p>
+</div></div>
+<div class="sl-block" data-block-type="image" style="min-width: 30px; min-height: 30px; width: 207.51276102088167px; height: 197px; left: 63px; top: 392px;" data-block-id="aacb7f53bee30d43f24ee66ce521292c"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="454" data-natural-height="431" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1772982/_____2015-09-29___4.55.12.png"></div></div></section><section data-id="9e00f3a109d9999338a142bbcb29a909"><div class="sl-block" data-block-type="text" style="width: 871px; left: 45px; top: 93px; height: auto;" data-block-id="d094d91e38665debab1ea0a4c884e25f"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2>利用 Function 更改外部變數內容</h2>
+</div></div>
+<div class="sl-block" data-block-type="image" style="min-width: 30px; min-height: 30px; width: 399.66970387243737px; height: 315px; left: 480px; top: 265px;" data-block-id="437b48067cf0e2bd852c5aa8569e7651"><div class="sl-block-content" style="z-index: 12;"><img style="" data-natural-width="557" data-natural-height="439" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1773042/_____2015-09-29___5.10.15.png"></div></div>
+<div class="sl-block" data-block-type="image" style="min-width: 30px; min-height: 30px; width: 463.4193548387097px; height: 286px; left: 0px; top: 265px;" data-block-id="6ac9741cf9408a87e7f85a28e0316d68"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="653" data-natural-height="403" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1772841/_____2015-09-29___4.33.07.png"></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: -40px; top: 193px;" data-block-id="00aef1026c151c34c122f1df5f4ac303"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14;">
+<p>Before</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 420px; top: 193px;" data-block-id="dcf95872416d6197876265ec275806c3"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 15;">
+<p>After</p>
+</div></div></section><section data-id="6c5be397bb91cb9841626b68ae8f5a3c"><div class="sl-block" data-block-type="text" style="width: 871px; left: 45px; top: 93px; height: auto;" data-block-id="be26a2032956815892979d970d85677f"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2>利用 Function 更改外部變數內容</h2>
+</div></div>
+<div class="sl-block" data-block-type="image" style="width: 399.66970387243737px; height: 315px; left: 480px; top: 265px;" data-block-id="be87abd8e68bb070e8d17c2597aef08d"><div class="sl-block-content" style="z-index: 12;"><img style="" data-natural-width="557" data-natural-height="439" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1773042/_____2015-09-29___5.10.15.png"></div></div>
+
+
+<div class="sl-block" data-block-type="text" style="height: auto; width: 600px; left: 420px; top: 193px;" data-block-id="41298f8cf0fbf01fe5bede495c8c64dc"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p>After</p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="5873236666bb1fdc1567b05cf8baf456" style="height: auto; min-width: 30px; min-height: 30px; width: 433px; left: 24px; top: 232px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14;">
+<p style="text-align:left"><span style="font-size:0.7em">在這裡，你可以使用 gdb 查看 function 參數是什麼？</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">(gdb) b 10</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">(gdb) r</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">(gdb) s</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">changeValue (value=<span style="color:#FF0000">0x7fff5fbffc08</span>) (<span style="color:#FF0000">數值</span>！</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">(gdb) print value</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">(gdb) print *value</span></p>
+</div></div></section><section data-id="0ba5753c26ad288261f8c6587db59130"><div class="sl-block" data-block-type="text" style="width: 871px; left: 45px; top: 85px; height: auto;" data-block-id="e3c93d1a784ac51ece3171af7f5f5153"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2>小試身手 - 4</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; min-width: 30px; min-height: 30px; width: 673px; left: 160px; top: 171px;" data-block-id="f3b9b2b23d7306cfa6678f1c2fc4d897"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left"><span style="font-size:0.7em">請寫出一個 function 可以將兩個變數的數值調換，並且適當修改 function 的形式。</span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" style="min-width: 30px; min-height: 30px; width: 583.9537572254335px; height: 328px; left: 177px; top: 266px;" data-block-id="6e92ddd4b267c148e703b04f1b8d1927"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="924" data-natural-height="519" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1773083/_____2015-09-29___5.21.03.png"></div></div></section><section data-id="1756d186796c2a9fbf86acbf528f5e29"><div class="sl-block" data-block-type="image" data-block-id="2657c9204e28a5a049ee2a924fb9093e" style="min-width: 30px; min-height: 30px; width: 721.7669172932331px; height: 526px; left: 119px; top: 80px;"><div class="sl-block-content" style="z-index: 11;"><img style="" data-natural-width="1095" data-natural-height="798" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1888632/_____2015-10-29___10.44.25.png"></div></div></section><section data-id="54a1a8f704f464dc554b7419452dcaa2"><div class="sl-block" data-block-type="text" style="width: 800px; left: 56px; top: 96px; height: auto;" data-block-id="86400cb06563259f7820a3a8addd0240"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2><span style="font-size:1.0em">思考</span></h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 89px; top: 191px; height: auto;" data-block-id="fbfd8508c3daf2aec351b6c728cacdff"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left"><span style="font-size:0.7em">上面示範的是利用一個 int 變數的位址當作參數傳入 function，於是這個 function 可以藉由指向 int 變數的指標，取得外界 int 變數的位址並從記憶體中直接更改 int 變數的內容。</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">但是如果我們今天要更改 function 外的資料，它的型別原本就是一個指標型別呢？像是 int *ptr;</span></p>
+
+<p style="text-align:left"> </p>
+
+<p> </p>
+</div></div>
+<div class="sl-block" data-block-type="image" style="min-width: 30px; min-height: 30px; width: 178px; height: 168.98237885462555px; left: 622px; top: 406px;" data-block-id="50c1bc932a14ff0879ad1d80381b567b"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="454" data-natural-height="431" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1772982/_____2015-09-29___4.55.12.png"></div></div>
+<div class="sl-block" data-block-type="image" style="min-width: 30px; min-height: 30px; width: 298px; height: 234.8689407540395px; left: 214px; top: 373px;" data-block-id="1ec0bab9ac7fd354204ce83f72be9bbe"><div class="sl-block-content" style="z-index: 14;"><img style="" data-natural-width="557" data-natural-height="439" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1773042/_____2015-09-29___5.10.15.png"></div></div></section><section data-id="a76202a754d504ee239dc4d3da25103f"><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 270px; height: auto;" data-block-id="7663c1293c2ab2664ecbd1b8e9ce3edb"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h1>想翻頁偷看嗎？</h1>
+</div></div></section><section data-id="170dd46b7263275c704679cf2ba19308"><div class="sl-block" data-block-type="text" style="width: 800px; left: 56px; top: 96px; height: auto;" data-block-id="91aedbf21ee4957984711fcdd0a6d498"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2><span style="font-size:1.0em">思考</span></h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 179px; height: auto;" data-block-id="372eca43081694f995e6d2653aa1dd28"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left"><span style="font-size:0.7em">如果我們想要藉由 function 來修改 int *ptr 這樣一個指標變數的內容。我們就必須要取得 ptr 這個指標變數的位址（是的！他是一個變數，當然也會有位址）</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">因此傳入 function 是使用 function ( &amp;ptr ); 這時候我們只要注意定義出適當的參數型別就可以了。我們會定義出一個指標變數，並且<span style="color:#FF0000">這個指標變數 指向 一個指標</span>（該指標指向 int )。</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">所以就是:</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">declaration:    function (int *(*ptr_to_ptr));</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">call:                  function( &amp;ptr );</span></p>
+
+<p style="text-align:left"> </p>
+
+<p> </p>
+</div></div>
+<div class="sl-block" data-block-type="image" style="min-width: 30px; min-height: 30px; width: 191.02523659305993px; height: 165px; left: 640px; top: 408px;" data-block-id="728c40d0e4bd68e4402a680158de38a3"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="367" data-natural-height="317" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1774540/_____2015-09-29___11.11.42.png"></div></div></section><section data-id="55b14a4c4f312bd71b27c02c0674a149"><div class="sl-block" data-block-type="text" data-block-id="65465821721acf9fd71caed29c5b86da" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 193px; top: 140px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<p style="text-align: left;">其實概念很簡單：</p>
+
+<p style="text-align: left;"><span style="font-size:0.7em">如果我們要用 function 更改外面 int 型別的變數內容，我們就傳入 int 變數的位址作為參數， int 變數的位址其實就是一個指標變數，指向 int 。</span></p>
+
+<p style="text-align: left;"> </p>
+
+<p style="text-align: left;"><span style="font-size:0.7em">如果，我們今天要改的是 int * 型別的變數，就要傳入 int * 型別變數的位址，而這個位址的型別其實會是 int **。所以我們要用 function 更改外部 int * 型別變數，要使用 int ** 型別的參數。</span></p>
+</div></div></section><section data-id="4f7caae14dd29fb6c51f037f18709087"><div class="sl-block" data-block-type="text" style="width: 800px; left: 59px; top: 130px; height: auto;" data-block-id="71a447a4b282ca49f86db4a9f0d05288"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>回想</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 249px; height: auto;" data-block-id="47d8171e0e1a9305e96f523a1422c145"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" dir="ui">
+<ul>
+	<li>
+	<p>scanf("%d", &amp;num); 為什麼要有 &amp; operator ? </p>
+	</li>
+	<li>
+	<p>再次問男人 $ man scanf 請問你們看到了什麼？</p>
+
+	<ul>
+		<li>
+		<p>const char *：下一節說明 Type2</p>
+		</li>
+	</ul>
+	</li>
+</ul>
+</div></div></section><section data-id="f2696b5998ba72e811a4076964ca3d52"><div class="sl-block" data-block-type="text" style="width: 800px; left: 72px; top: 218px; height: auto;" data-block-id="7b8095e7da3a7c51685868c21f919f1e"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2>Congratulations!</h2>
+
+<p>你通過了第二關了！</p>
+
+<p>會不會覺得很辛苦？</p>
+
+<p>接著來看看 Part 2 吧！</p>
+</div></div></section></section>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="deck-kudos">
+		<button class="kudos-button kudos-trigger" data-kudos-id="524380" data-kudoed-by-user="false">
+			<div class="kudos-heart">
+				<span class="kudos-icon icon i-heart-fill"></span>
+			</div>
+			<div class="kudos-count" data-kudos-value="8" data-kudos-id="524380"></div>
+		</button>
+	</div>
+
+	<div class="pill summary-pill">
+		<div class="pill-picture" style="background-image: url(https://lh6.googleusercontent.com/-jFXm7uS4At8/AAAAAAAAAAI/AAAAAAAAARM/RCcA8oJ3rwU/photo.jpg?sz=50)"></div>
+		<div class="pill-content">
+			<h4 class="pill-title">C 指標 Pointer part1</h4>
+			<p class="pill-description">By Jie-Han Chen</p>
+		</div>
+	</div>
+
+	<div class="pill instructions-pill">
+		<div class="pill-picture"></div>
+		<div class="pill-content">
+			<h4 class="pill-title"></h4>
+			<p class="pill-description"></p>
+		</div>
+	</div>
+
+</div>
+
+<div class="column">
+	<header class="deck-info">
+		<div class="deck-social">
+			<a href="#" class="deck-social-button facebook-share-button" data-tooltip="Share on Facebook">
+				<span class="icon i-facebook"></span>
+			</a>
+			<a href="#" class="deck-social-button twitter-share-button" data-tooltip="Share on Twitter">
+				<span class="icon i-twitter"></span>
+			</a>
+			<a href="#" class="deck-social-button google-share-button" data-tooltip="Share on Google+">
+			</a>
+		</div>
+
+		<div class="deck-promotion">
+			<a class="button cta" href="/pricing?ref=caplt">Create a presentation like this <span class="logo"></span></a>
+		</div>
+
+
+		<div class="deck-options">
+			<a class="fullscreen-button" data-tooltip="Fullscreen" href="#"><span class="icon i-fullscreen"></span></a>
+			<a class="comment-button" data-tooltip="Comments" data-scroll-to href="#comments" data-scroll-to data-scroll-to-offset="-90"><span class="icon i-comment-stroke"></span></a>
+			<a class="share-button" data-tooltip="Share" href="#"><span class="icon i-share"></span></a>
+		</div>
+
+		<div class="clear"></div>
+
+		<div class="details">
+			<div class="deck-info">
+				<h3 class="title">C 指標 Pointer part1</h3>
+				<p class="description">操作方式：有出現往下按鈕的時候，請往下按來觀看，到底時再往右。 按 ESC 可以查看投影片架構</p>
+				<ul class="deck-meta">
+					<li data-tooltip="Published date" data-tooltip-delay="500">
+						<span class="icon i-clock"></span>
+						<time class="value ago" datetime="2015-10-24 15:40:32 UTC"></time>
+					</li>
+					<li data-tooltip="Kudos" data-tooltip-delay="500">
+						<span class="icon i-heart-fill"></span>
+						<span class="value" data-kudos-value="8" data-kudos-id="524380"></span>
+					</li>
+					<li data-tooltip="Views" data-tooltip-delay="500">
+						<span class="icon i-eye"></span>
+						<span class="value">937</span>
+					</li>
+				</ul>
+			</div>
+
+			<div class="user-info">
+	<div class="picture" style="background-image: url(https://lh6.googleusercontent.com/-jFXm7uS4At8/AAAAAAAAAAI/AAAAAAAAARM/RCcA8oJ3rwU/photo.jpg?sz=50)"></div>
+	<div class="text">
+		<h3 class="title">
+			<a href="/jie-hanchen" class="username">Jie-Han Chen</a>
+		</h3>
+		<p class="description"></p>
+		<ul class="links">
+			
+			
+		</ul>
+	</div>
+	<div class="clear"></div>
+</div>
+
+			<div class="clear"></div>
+		</div>
+	</header>
+
+	<section class="comments" id="comments">
+		<div id="disqus_thread"><span class="placeholder">Loading comments...</span></div>
+	</section>
+
+	<section class="deck-list">
+		<h2>More from <a href="/jie-hanchen">Jie-Han Chen</a></h2>
+		<ul class="carousel">
+			<li class="deck-thumbnail">
+  <div class="deck-image" style="background-image: url(https://s3.amazonaws.com/media-p.slid.es/thumbnails/secure/4b005d/decks.jpg)">
+    <a class="deck-link" href="/jie-hanchen/deck-2"></a>
+  </div>
+  <footer class="deck-details">
+    <a class="author" href="/jie-hanchen">
+      <span class="picture" style="background-image: url(https://lh6.googleusercontent.com/-jFXm7uS4At8/AAAAAAAAAAI/AAAAAAAAARM/RCcA8oJ3rwU/photo.jpg?sz=50)"></span>
+      <span class="name">Jie-Han Chen</span>
+    </a>
+    <div class="stats">
+      <div>526<span class="icon i-eye"></span></div>
+    </div>
+  </footer>
+</li>
+<li class="deck-thumbnail">
+  <div class="deck-image" style="background-image: url(https://s3.amazonaws.com/media-p.slid.es/thumbnails/secure/428e09/decks.jpg)">
+    <a class="deck-link" href="/jie-hanchen/deck"></a>
+  </div>
+  <footer class="deck-details">
+    <a class="author" href="/jie-hanchen">
+      <span class="picture" style="background-image: url(https://lh6.googleusercontent.com/-jFXm7uS4At8/AAAAAAAAAAI/AAAAAAAAARM/RCcA8oJ3rwU/photo.jpg?sz=50)"></span>
+      <span class="name">Jie-Han Chen</span>
+    </a>
+    <div class="stats">
+      <div>89<span class="icon i-eye"></span></div>
+    </div>
+  </footer>
+</li>
+
+		</ul>
+	</section>
+
+</div>
+
+      </div>
+      <footer class="global-footer">
+    <div class="link-group">
+      <h5>Product</h5>
+      <a href="http://slides.com/">Home</a>
+      <a href="http://slides.com/explore">Explore</a>
+      <a href="http://slides.com/features">Features</a>
+      <a href="http://slides.com/pricing">Pricing</a>
+      <a href="http://slides.com/developers">Developers</a>
+    </div>
+
+    <div class="link-group">
+      <h5>Help</h5>
+      <a href="http://help.slides.com" target="_blank">Forum</a>
+      <a href="http://help.slides.com/knowledgebase" target="_blank">Knowledge Base</a>
+      <a href="http://help.slides.com" data-feedback-mode="smartvote">Leave Feedback</a>
+      <a href="http://help.slides.com" data-feedback-mode="contact">Report an Issue</a>
+    </div>
+
+    <div class="link-group">
+      <h5>Community</h5>
+      <a href="http://blog.slides.com" target="_blank">Blog</a>
+      <a href="http://twitter.com/slides" target="_blank">Twitter</a>
+      <a href="http://facebook.com/slidesapp" target="_blank">Facebook</a>
+      <a href="http://plus.google.com/+slidesapp/" rel="publisher" target="_blank">Google+</a>
+    </div>
+
+    <div class="link-group">
+      <h5>Company</h5>
+      <a href="http://slides.com/about">About Slides</a>
+      <a href="http://slides.com/changelog">What&#39;s New</a>
+      <a href="http://slides.com/terms">Terms of Service</a>
+      <a href="http://slides.com/privacy">Privacy Policy</a>
+    </div>
+
+    <div class="copyright"><span>&copy; 2016 Slides, Inc.</span></div>
+</footer>
+
+    </div> <!--! end of #container -->
+    <script>
+UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/f7sH7NavrjjvuGxByaw.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
+
+UserVoice.push(['set', {
+  accent_color: '#448dd6',
+  trigger_color: 'white',
+  trigger_background_color: 'rgba(46, 49, 51, 0.6)',
+  position: 'automatic'
+}]);
+
+</script>
+    
+<script>
+	var SLConfig = {"deck":{"id":524380,"slug":"pointer-2-3","title":"C 指標 Pointer part1","description":"操作方式：有出現往下按鈕的時候，請往下按來觀看，到底時再往右。 按 ESC 可以查看投影片架構","visibility":"all","published_at":"2015-10-24T15:40:32.161Z","sanitize_messages":null,"thumbnail_url":"https://s3.amazonaws.com/media-p.slid.es/thumbnails/6622e4b4a2405ac8ddb0ba74f6761434/thumb.jpg","view_count":937,"user":{"id":382096,"username":"jie-hanchen","name":"Jie-Han Chen","description":null,"thumbnail_url":"https://lh6.googleusercontent.com/-jFXm7uS4At8/AAAAAAAAAAI/AAAAAAAAARM/RCcA8oJ3rwU/photo.jpg?sz=50","pro":false,"team_id":null,"settings":{"id":218563,"present_controls":true,"present_upsizing":true,"present_notes":true}},"background_transition":"slide","transition":"slide","theme_id":null,"theme_font":"montserrat","theme_color":"silver-green","auto_slide_interval":0,"comments_enabled":true,"forking_enabled":true,"rolling_links":false,"center":false,"should_loop":false,"share_notes":false,"slide_number":true,"rtl":false,"version":2,"collaborative":null,"deck_user_editor_limit":1,"data_updated_at":null,"font_typekit":null,"font_google":null}};
+</script>
+    <script defer="defer" src="//assets.slid.es/assets/application-f784ca6cb5aa1d15c9906b476546ae86.js"></script>
+    	<script defer="defer" src="//assets.slid.es/assets/reveal.min-7e7df91e55fa7d8c3fd4b02febc02eac.js"></script>
+	
+
+
+  </body>
+</html>

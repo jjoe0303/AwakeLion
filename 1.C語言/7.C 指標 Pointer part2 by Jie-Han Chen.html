@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html class="sl-root decks show " data-account="free">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>C 指標 Pointer part2 by Jie-Han Chen</title>
+    <meta name="description" content="操作方式：有出現往下按鈕的時候，請往下按來觀看，到底時再往右。 按 ESC 可以查看投影片架構" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <meta property="og:title" content="C 指標 Pointer part2 by Jie-Han Chen" />
+    <meta property="og:description" content="操作方式：有出現往下按鈕的時候，請往下按來觀看，到底時再往右。 按 ESC 可以查看投影片架構" />
+    <meta property="og:site_name" content="Slides" />
+    <meta property="og:image" content="https://s3.amazonaws.com/media-p.slid.es/thumbnails/secure/4b005d/decks.jpg" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="http://slides.com/jie-hanchen/deck-2" />
+    <meta property="fb:app_id" content="146002942236376" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <link rel="manifest" href="/manifest.json">
+
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,600,700&subset=latin,cyrillic-ext,greek-ext,greek,latin-ext,cyrillic" rel="stylesheet" type="text/css" data-application-font="opensans">
+
+    <link href="//assets.slid.es/assets/slides/slides-1df814f963530a8557bab503c81c1049.css" media="all" rel="stylesheet" />
+    <link href="//assets.slid.es/assets/application-d202e572391aa525c603ef5922a62010.css" media="all" rel="stylesheet" />
+    	<link href="//assets.slid.es/assets/deck-v2-b50d15489798f38975e3f570617f3f6a.css" media="all" rel="stylesheet" />
+
+
+
+<style id="user-css-output" type="text/css"></style>
+
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="3SfiSUPtmn7IHaPBfd7wcXVWYYOJYO/9zMhnuLjLYXY=" name="csrf-token" />
+    <script type="text/javascript">
+  if( !/dnt=1/.test( window.location.search ) ) {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-39670045-1', 'auto');
+    ga('send', 'pageview');
+
+  }
+</script>
+    <!--[if lt IE 9]>
+    <script src="//assets.slid.es/assets/html5shiv-b51d49ab0e89834a02ffce4a59905afb.js"></script>
+<![endif]-->
+    	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@Slides">
+	<meta name="twitter:title" content="C 指標 Pointer part2">
+	<meta name="twitter:description" content="操作方式：有出現往下按鈕的時候，請往下按來觀看，到底時再往右。 按 ESC 可以查看投影片架構">
+	<meta name="twitter:image" content="https://s3.amazonaws.com/media-p.slid.es/thumbnails/secure/4b005d/decks.jpg">
+
+  </head>
+  <body>
+    
+    <div id="container" class="container">
+      <header class="global-header show-on-scroll">
+  <div class="wrapper">
+    <h1 class="logo-animation">
+      <a class="symbol" href="/">
+        <div class="box-1"></div>
+        <div class="box-2"></div>
+        <div class="box-3"></div>
+      </a>
+      <a class="word" href="/"></a>
+    </h1>
+    <ul class="nav nav-long">
+        <li class="nav-item" data-page-id="home/explore">
+          <a class="nav-item-anchor" href="/explore"><span class="nav-item-label">Explore</span></a>
+        </li>
+        <li class="nav-item" data-page-id="static/features">
+          <a class="nav-item-anchor" href="/features"><span class="nav-item-label">Features</span></a>
+        </li>
+        <li class="nav-item" data-page-id="static/pricing">
+          <a class="nav-item-anchor" href="/pricing?h=1"><span class="nav-item-label">Pricing</span></a>
+        </li>
+        <li class="nav-item-divider"></li>
+        <li class="nav-item" data-page-id="sessions/new">
+          <a class="nav-item-anchor" href="/users/sign_in"><span class="nav-item-label">Log in</span></a>
+        </li>
+        <li class="nav-item nav-item-highlighted nav-item-secondary" data-page-id="static/pricing">
+          <a class="nav-item-anchor" href="/pricing"><span class="nav-item-label">Sign up</span></a>
+        </li>
+    </ul>
+  </div>
+</header>
+
+      
+      <div id="main" class="main" role="main">
+        
+
+
+
+
+<div class="marquee">
+
+	<div class="reveal-frame">
+		<div class="reveal-viewport theme-font-montserrat theme-color-silver-green">
+			<div class="reveal">
+				<div class="slides">
+					<section data-background-image="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1870459/starlight.jpg" data-background-size="cover"><div class="sl-block" data-block-type="text" data-block-id="1b76dcbe20909e481f162428d4dbd1c4" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 180px; top: 288px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2><span style="color:#FFFFFF">Pointer Part 2</span></h2>
+
+<p><span style="color:#FFFFFF">- Pointer &amp; Array -</span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="9c95c3c59d6cfaf5860ab5a16a9f9a7e" style="height: auto; min-width: 30px; min-height: 30px; width: 272px; left: 528px; top: 420px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p><span style="color:#FFFFFF"><span style="font-size:0.7em">陳杰翰 JIElite</span></span></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 179px; height: auto;" data-block-id="9d3615fb19dd3444906c8c583ef5b0e4"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>上週內容</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 264px; height: auto;" data-block-id="9a8c5bfe41de1fe40ee79d9de01e70bf"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text">
+<ul>
+	<li>數值觀念與記憶體位址</li>
+	<li>指標簡介</li>
+	<li>指標應用 - 修改變數內容</li>
+</ul>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 302px; height: auto;" data-block-id="3be25e46a1704c44347d615b37c4686c"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h1>但是精彩的才正要開始</h1>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 270px; height: auto;" data-block-id="f4b82795bbcc99e268b68e85c4d818e0"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2><span style="font-size:0.9em">上一次我們學會如何宣告一個指標變數</span></h2>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 270px; height: auto;" data-block-id="b22ef8b33304c5793df61acea579d4b6"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2><span style="font-size:0.9em">既然指標變數是一個變數，那我們是不是也可以對他進行四則運算？</span></h2>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="300517f342ea70bd92c60b82cc75dc24"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>小試身手 - 5</h2>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="437b8ff7f7638f53cd5cff003a2758ec" style="min-width: 30px; min-height: 30px; width: 437.40000000000003px; height: 411px; left: 262px; top: 186px;"><div class="sl-block-content" style="z-index: 12;"><img style="" data-natural-width="729" data-natural-height="685" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1894535/_____2015-10-31___6.22.35.png"></div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="0d94062b83a2c81b0f79cd236f433de5"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2><span style="font-size:0.9em">執行後你將看到以下錯誤</span></h2>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="facf52cac0e2fa3726e0364f3ac227f0" style="height: auto; min-width: 30px; min-height: 30px; width: 863px; left: 97px; top: 188px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="color:rgb(255, 255, 255); text-align:left"><span style="font-size:0.7em"><span style="color:#FF0000">error</span><span style="color:#000000">: invalid operands to binary expression ('</span><span style="color:#008080">int *</span><span style="color:#000000">' and '</span><span style="color:#008080">int *</span><span style="color:#000000">')</span></span></p>
+
+<p style="color:rgb(245, 245, 245); text-align:left"><span style="font-size:0.7em"><span style="color:#000000">        printf("p + p2: %p\n", </span><span style="color:#008080">p</span><span style="color:#000000"> + </span><span style="color:#008080">p2</span><span style="color:#000000">);</span></span></p>
+
+<p style="color:rgb(52, 189, 38); text-align:left"><span style="font-size:0.7em"><span style="color:#000000">                               ~ ^ ~~</span></span></p>
+
+<p style="color:rgb(255, 255, 255); text-align:left"><span style="font-size:0.7em"><span style="color:#800080">warning</span><span style="color:#000000">: format specifies type 'void *' but the <u>argument</u> has type 'long' [-Wformat]</span></span></p>
+
+<p style="color:rgb(245, 245, 245); text-align:left"><span style="font-size:0.7em"><span style="color:#000000">        printf("p - p2: %p\n", <u>p - p2</u>);</span></span></p>
+
+<p style="color:rgb(52, 189, 38); text-align:left"><span style="font-size:0.7em"><span style="color:#000000">                        ~~     ^~~~~~</span></span></p>
+
+<p style="color:rgb(52, 189, 38); text-align:left"><span style="font-size:0.7em"><span style="color:#000000">                        %ld</span></span></p>
+
+<p style="color:rgb(255, 255, 255); text-align:left"> </p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 860px; left: 40px; top: 128px; height: auto;" data-block-id="07ceb7568559014adbe4a918f3f84cea"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>在 C 裡面，允許指標的算術運算</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 238px; height: auto;" data-block-id="99f7bc69187db49f869d1ae117ef93f9"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<ul>
+	<li>指標搭配常數作加減</li>
+	<li>指標相減</li>
+	<li>指標搭配  ++, -- 可以前置也可以後置</li>
+	<li>
+<span style="color:rgb(255, 0, 0)">注意</span>：運算子的優先權</li>
+</ul>
+
+<p style="text-align:left">                       eg: *ptr++, *++ptr;</p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="3e3edb7baff9c3568a9256d1d484cdc2" style="height: auto; min-width: 30px; min-height: 30px; width: 648px; left: 156px; top: 447px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;" dir="ui">
+<p style="text-align:left"><span style="font-size:0.7em">Operator precedence in C: </span></p>
+<p style="text-align:left"><a href="http://en.cppreference.com/w/c/language/operator_precedence" target="_blank"><span style="font-size:0.7em">http://en.cppreference.com/w/c/language/operator_precedence</span></a></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 300px; height: auto;" data-block-id="f2a84885cc6816e75b3f424ace3dc585"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h3>但是通常這些運算你會搭配 Array 做使用，才能確保不發生錯誤</h3>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="437874f82c9e0eb8f4e0d869094a7822"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2><span style="color:#000000"><span style="font-size:32pt">Pointer &amp; Array</span></span></h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 188px; height: auto;" data-block-id="2916513bcfe4facb411569b96f5d5383"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left">int a[10];</p>
+
+<p style="text-align:left">int *p = &amp;<span style="color:#FF0000">a[0]</span>; ( p 指向<span style="color:#FF0000"> int 變數</span>，所以給予 int 變數的位址 )</p>
+
+<p style="text-align:left"> </p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="066d69e24751a456f2400982dbb571e4" style="min-width: 30px; min-height: 30px; width: 517.2413793103449px; height: 200px; left: 222px; top: 320px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="1200" data-natural-height="464" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1894552/_____2015-10-31___7.10.34.png"></div></div>
+<div class="sl-block" data-block-type="text" data-block-id="2b46c08324ee34c81f625c111acb1042" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 180px; top: 529px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14;">
+<p><span style="font-size:0.7em">圖片取自：C Programming: A Modern Approach, 2nd Edition</span></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="10627a1203683f643f12fa78a5044d8a"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2><span style="color:#000000"><span style="font-size:32pt">Pointer &amp; Array</span></span></h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 191px; height: auto;" data-block-id="16cff9dc911202450d57afbc02d3af57"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left">int a[10];</p>
+
+<p style="text-align:left">int *p = &amp;a[0]; ( p 指向 int 變數，所以給予 int 變數的位址 )</p>
+
+<p style="text-align:left"><span style="color:#FF0000">*p = 5;</span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 600px; left: 180px; top: 529px;" data-block-id="2c1ae045a39b9ef5a9174dc305d72f73"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p><span style="font-size:0.7em">圖片取自：C Programming: A Modern Approach, 2nd Edition</span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="90911872e9d018a0deec2893e1360c23" style="min-width: 30px; min-height: 30px; width: 556px; height: 215.47883817427387px; left: 202px; top: 306px;"><div class="sl-block-content" style="z-index: 14;"><img style="" data-natural-width="1205" data-natural-height="467" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1894554/_____2015-10-31___7.10.37.png"></div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="414aa244772ca96bb0a126a620a6c92b"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2><span style="color:#000000"><span style="font-size:32pt">Pointer 算術運算: 常數加減</span></span></h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 360px; left: 86px; top: 210px; height: auto;" data-block-id="3faf35f780044b6636abc5aa643c1a8b"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left">int a[10];</p>
+
+<p style="text-align:left"><span style="color:#FF0000">int *p = &amp;a[2]; </span></p>
+
+<p style="text-align:left"><span style="color:#FF0000">int *q = &amp;a[5];</span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 600px; left: 160px; top: 560px;" data-block-id="4d1ea6820ed85f210a1eeafe4aa5d8bc"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p><span style="font-size:0.7em">圖片取自：C Programming: A Modern Approach, 2nd Edition</span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="1ba939819674c3ad8082f3cd56b545c2" style="min-width: 30px; min-height: 30px; width: 360px; height: 135px; left: 86px; top: 399px;"><div class="sl-block-content" style="z-index: 14;"><img style="" data-natural-width="776" data-natural-height="291" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1894556/_____2015-10-31___7.29.22.png"></div></div>
+<div class="sl-block" data-block-type="image" data-block-id="3200ab0400235116da01d3ed8cdae1d4" style="min-width: 30px; min-height: 30px; width: 360px; height: 140.23529411764704px; left: 482px; top: 399px;"><div class="sl-block-content" style="z-index: 15;"><img style="" data-natural-width="765" data-natural-height="298" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1894557/_____2015-10-31___7.29.58.png"></div></div>
+<div class="sl-block" data-block-type="text" data-block-id="b60ddedd2ceaafd267c2ae3950f6b154" style="height: auto; min-width: 30px; min-height: 30px; width: 408px; left: 482px; top: 197px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 16;">
+<p style="text-align:left">method 1:</p>
+
+<p style="text-align:left">        p = q + 3;</p>
+
+<p style="text-align:left">method 2: </p>
+
+<p style="text-align:left">        p = p + 6;</p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 100px; top: 226px; height: auto;" data-block-id="b1d4798be7ffa86064758a333e40a356"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" dir="ui" style="z-index: 10;">
+<p style="text-align:left">我們都知道在宣告的時候，變數前面的 * 用來標記該變數是一個指標變數，像是:  int *ptr;</p>
+
+<p style="text-align:left">那為什麼要有前面的型別？<span style="color:#FF0000">用來解讀記憶體內容</span></p>
+
+<p style="text-align:left"><span style="color:#FF0000">int</span> *p = &amp;a[0];</p>
+
+<p style="text-align:left">p = p + 3; </p>
+
+<p style="text-align:left">就會將指標移動到<span style="color:#FF0000">下三個的 int 變數</span>位址，依照指標<span style="color:#FF0000">指向的型別</span>作移動，而不是單純將位址的數值作加減。</p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="16b646290d67bab583b7b3896253351f" style="height: auto; min-width: 30px; min-height: 30px; width: 773px; left: 112px; top: 103px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<h2><span style="color:rgb(17, 17, 17)">p = p + 3;  到底是什麼意思？</span></h2>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 104px; top: 188px; height: auto;" data-block-id="5d5b1cf25a55b6cf123702c22bd29bc2"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;">
+<p style="text-align:left">指標變數指向 Array 中的任一元素都可以，意思是當前指標對誰做操作。</p>
+
+<p style="text-align:left"> </p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="14954c185da97a1f5bca382d0de78375"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2><span style="color:#000000"><span style="font-size:32pt">Pointer &amp; Array</span></span></h2>
+</div></div>
+<div class="sl-block" data-block-type="image" style="min-width: 30px; min-height: 30px; width: 467.2147651006712px; height: 182px; left: 437px; top: 286px;" data-block-id="d35687bf7ff6a4722d53fa31c3d4a252"><div class="sl-block-content" style="z-index: 12;"><img style="" data-natural-width="765" data-natural-height="298" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1894557/_____2015-10-31___7.29.58.png"></div></div>
+<div class="sl-block" data-block-type="text" data-block-id="e79ba0e593f7ae570ee1fc1b8e3109fc" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 100px; top: 289px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p style="text-align:left"><span style="font-size:0.7em">int *p = &amp;a[8];   </span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">p 是什麼？ p + 1是什麼？</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">*p 是什麼？ *p + 1 是什麼？</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">*(p+1) 是什麼？*(p -1) 是什麼？</span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 427px; left: 480px; top: 471px;" data-block-id="9aaf9f369ee569f77237881c93626f04"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 15;">
+<p><span style="font-size:0.5em">圖片取自：C Programming: A Modern Approach, 2nd Edition</span></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 81px; height: auto;" data-block-id="78eedcd9be68afadb246f1a66786de7f"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2>小試身手 - 6</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="eacff31846872e7c568868e2c3810f7d" style="height: auto; min-width: 30px; min-height: 30px; width: 819px; left: 61px; top: 552px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p><span style="font-size:0.7em">如果你也很懶的話： <span style="color:#008080">git clone https://gist.github.com/634f18ba9e2648b48585.git  q6</span></span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="6e9b28fdec02cb122a186521b79e7895" style="min-width: 30px; min-height: 30px; width: 463.9638554216868px; height: 397px; left: 248px; top: 155px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="970" data-natural-height="830" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1894590/_____2015-10-31___8.36.19.png"></div></div></section><section><div class="sl-block" data-block-type="text" data-block-id="f27d2d6a7fe975885dec18a385e550df" style="height: auto; min-width: 30px; min-height: 30px; width: 659px; left: 164px; top: 210px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<p style="text-align:left"><span style="font-size:0.7em"><span style="color:rgb(0, 128, 128)"> </span><span style="color:#FF0000">$</span><span style="color:rgb(0, 128, 128)"> </span><span style="color:#A52A2A">git clone</span><span style="color:rgb(0, 128, 128)"> https://gist.github.com/634f18ba9e2648b48585.git  </span><span style="color:#0000FF">q6</span></span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="78fb9b7640c8d8a120c7d61be68d5a70" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 180px; top: 103px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<h2>指令解說</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="946efe19432258fcce87486b1e5eff66" style="height: auto; min-width: 30px; min-height: 30px; width: 709px; left: 139px; top: 268px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<ul>
+	<li>
+<span style="color:#FF0000">$</span> 開頭：代表是在終端機下的指令 (Unix  系列)</li>
+	<li>
+<span style="color:#A52A2A">git clone</span> 使用 git 工具從遠端獲取程式碼 (or 庫)</li>
+	<li>
+<span style="color:#008080">一串網址.git</span>：從哪裡獲取？</li>
+	<li>
+<span style="color:#0000FF">q6</span> 代表將獲取到的目錄更名為 q6。你可以試試看不加 q6, git clone 下來的目錄會是怎麼樣？</li>
+</ul>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="15fc199448f30a207b2b59045273faaf" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 200px; top: 473px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14;">
+<p style="text-align: left;"><span style="font-size:0.7em">去除 .git: <a href="https://gist.github.com/JIElite/634f18ba9e2648b48585" target="_blank">https://gist.github.com/JIElite/634f18ba9e2648b48585</a></span></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 81px; top: 93px; height: auto;" data-block-id="e9f6c03529ee55d9bd7001853363dcc1"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>小試身手 - 6</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 819px; left: 61px; top: 552px;" data-block-id="e152eee57367e6a777b92231853b42e5"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<p><span style="font-size:0.7em">如果你也很懶的話： <span style="color:#008080">git clone https://gist.github.com/634f18ba9e2648b48585.git  q6</span></span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" style="min-width: 30px; min-height: 30px; width: 463.9638554216868px; height: 397px; left: 249px; top: 163px;" data-block-id="3b37acad530a2e05b4191ba296b1a7bc"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="970" data-natural-height="830" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1894590/_____2015-10-31___8.36.19.png"></div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 272px; height: auto;" data-block-id="c3181ae3c05d7fa568c5206282a49c1d"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2>為什麼指標可以這樣操作？因為 Array 在記憶體中是<span style="color:#FF0000">連續的空間</span>
+</h2>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="5d344491b268170368d6a90987d9afb4"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>
+<span style="color:#000000">指標搭配常數作加減</span><span style="color:rgb(105, 105, 105)"><em> </em></span>
+</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="1369e47893c0406f17190c55dad62664" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 180px; top: 210px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left">即是<span style="color:#FF0000">讓指標移動 ( 非 const pointer ) </span></p>
+
+<p style="text-align:left">移動的距離依照指標指向的型別而定</p>
+
+<p style="text-align:left">eg1: double *p; 一次移動 8個 bytes 的距離</p>
+
+<p style="text-align:left">eg2: </p>
+
+<p style="text-align:left">int a[10];</p>
+
+<p style="text-align:left">int (*ptr)[10] = &amp;a;</p>
+
+<p style="text-align:left">上面的 ptr 指向的是 int [10] 整個陣列～～～</p>
+
+<p style="text-align:left">  ptr + 1呢 XD?</p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 860px; left: 40px; top: 128px; height: auto;" data-block-id="a2e4114928d54df882a6b7d5664a6561"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>在 C 裡面，允許指標的算術運算</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 238px; height: auto;" data-block-id="0686a9145945c9b1a026402f8501b573"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<ul>
+	<li>
+<span style="color:#696969"><em>指標搭配常數作加減 </em></span>✓</li>
+	<li>指標相減</li>
+	<li>指標搭配  ++, -- 可以前置也可以後置</li>
+	<li>
+<span style="color:rgb(255, 0, 0)">注意</span>：運算子的優先權</li>
+</ul>
+
+<p style="text-align:left">                       eg: *ptr++, *++ptr;</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 648px; left: 156px; top: 447px;" data-block-id="42523710b1a915a785293a1307065b55"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;" dir="ui">
+<p style="text-align:left"><span style="font-size:0.7em">Operator precedence in C: </span></p>
+<p style="text-align:left"><a href="http://en.cppreference.com/w/c/language/operator_precedence" target="_blank"><span style="font-size:0.7em">http://en.cppreference.com/w/c/language/operator_precedence</span></a></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 269px; left: 346px; top: 103px; height: auto;" data-block-id="3a8b94c76102fcf9f1db195ff49e7b50"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2 style="text-align:left">指標相減</h2>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="f481df8fedcd4e3b5b39140ca2cf661d" style="min-width: 30px; min-height: 30px; width: 599.0196078431372px; height: 235px; left: 181px; top: 350px;"><div class="sl-block-content" style="z-index: 11;"><img style="" data-natural-width="910" data-natural-height="357" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1894599/_____2015-10-31___8.45.29.png"></div></div>
+<div class="sl-block" data-block-type="text" data-block-id="4f91623af65f3557564e6a06d9936ca6" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 200px; top: 190px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left">int *p = &amp;a[5];</p>
+
+<p style="text-align:left">int *q = &amp;a[1];</p>
+
+<p style="text-align:left">What is p - q? </p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 600px; left: 180px; top: 572px;" data-block-id="0ec95650e5baaba6b1a2489e739f3f16"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14;">
+<p><span style="font-size:0.7em">圖片取自：C Programming: A Modern Approach, 2nd Edition</span></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" data-block-id="d6a0fa9a606db8dcb728d47c124dd337" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 180px; top: 87px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2> 小試身手 - 7</h2>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="093b03d0faea2ff33eaef16425ac20dc" style="min-width: 30px; min-height: 30px; width: 580px; height: 421.98868229587714px; left: 190px; top: 161px;"><div class="sl-block-content" style="z-index: 12;"><img style="" data-natural-width="1237" data-natural-height="900" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1894619/_____2015-10-31___9.02.55.png"></div></div>
+<div class="sl-block" data-block-type="text" data-block-id="32d93c5e249c06a33d31ec90bbaf5075" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 190px; top: 591px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p><span style="color:#008080"><span style="font-size:0.7em">git clone https://gist.github.com/da28be5dde2048d95f72.git </span></span></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="height: auto; width: 600px; left: 180px; top: 77px;" data-block-id="8ac1d3fa8e03f3dfdb6184e9bcda8a3e"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2> 小試身手 - 7.2</h2>
+</div></div>
+
+<div class="sl-block" data-block-type="text" style="height: auto; width: 655px; left: 180px; top: 591px;" data-block-id="58f5a6694c302788247ef56639b10f20"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p><span style="font-size:0.7em"><span style="color:#008080">git clone </span>https://gist.github.com/64ec7f9b9673683e8bb2.git<span style="color:#008080"> </span></span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="d3ab4294f86681a8719bd98504097e02" style="min-width: 30px; min-height: 30px; width: 511.4340659340659px; height: 426px; left: 225px; top: 157px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="874" data-natural-height="728" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1894670/_____2015-10-31___9.49.54.png"></div></div></section><section><div class="sl-block" data-block-type="text" data-block-id="16b08f3d82d8d708074aa2d54c05a4ca" style="height: auto; min-width: 30px; min-height: 30px; width: 675px; left: 143px; top: 284px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<p>神奇的事情！？</p>
+
+<p>好孩子不要這樣寫，因為你不知道會發生什麼事情</p>
+
+<p> </p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="d4edd5dde731c40c11ed7e12d0b91576" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 180px; top: 412px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p><span style="font-size:0.7em">git clone https://gist.github.com/719ab459708f8969a21c.git</span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="6152b57f1e038bf44b5c3cee7f06c34c" style="height: auto; min-width: 30px; min-height: 30px; width: 644px; left: 143px; top: 115px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<h3>此頁可略，只是想告訴大家 多做實驗</h3>
+
+<p>（下週上課後砍掉此頁）</p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="99ee69b5159f1c960c609a4d9c9f4a18"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>指標相減</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 85px; top: 226px; height: auto;" data-block-id="d0d6600c5bd8114d114b2351384b950a"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text">
+<ul>
+	<li>代表兩者之間的距離</li>
+	<li>注意回傳型態！見p.7</li>
+	<li>相減代表的是<span style="color:#FF0000"> index 差距</span>：
+	<ul>
+		<li>int *p = &amp;a[5];</li>
+		<li>int *q = &amp;a[2];</li>
+		<li>p - q = <span style="color:#FF0000">5 - 2</span>;</li>
+	</ul>
+	</li>
+	<li>如果沒能確定兩個指標是指向同一個 Array 不要亂相減</li>
+</ul>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 860px; left: 40px; top: 128px; height: auto;" data-block-id="905bfd7adb2046091ca08019970eaec7"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>在 C 裡面，允許指標的算術運算</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 238px; height: auto;" data-block-id="b1196fa0576a2fc5dfb341815b68e8cc"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<ul>
+	<li>
+<span style="color:#696969"><em>指標搭配常數作加減 </em></span>✓</li>
+	<li>
+<span style="color:#808080"><em>指標相減 </em></span><span style="color:rgb(17, 17, 17); text-align:left">✓</span>
+</li>
+	<li>指標搭配  ++, -- 可以前置也可以後置</li>
+	<li>
+<span style="color:rgb(255, 0, 0)">注意</span>：運算子的優先權</li>
+</ul>
+
+<p style="text-align:left">                       eg: *ptr++; *++ptr;</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 648px; left: 156px; top: 447px;" data-block-id="7b1e70cd300637648476c7a165a5ef5b"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;" dir="ui">
+<p style="text-align:left"><span style="font-size:0.7em">Operator precedence in C: </span></p>
+<p style="text-align:left"><a href="http://en.cppreference.com/w/c/language/operator_precedence" target="_blank"><span style="font-size:0.7em">http://en.cppreference.com/w/c/language/operator_precedence</span></a></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" data-block-id="180769bc3c9860224217878043374709" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 180px; top: 103px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2>指標搭配 ++, -- 使用</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="cad10657b037d5855165a13d39730385" style="height: auto; min-width: 30px; min-height: 30px; width: 664px; left: 200px; top: 218px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left">int array[10];</p>
+
+<p style="text-align:left">int *ptr = &amp;array[0];</p>
+
+<p style="text-align:left">在這種情況下，使用 ptr++; ++ptr; 只是將 ptr + 1</p>
+
+<p style="text-align:left">所以會將指標移動到下一個 int 也就是 array[1];</p>
+
+<p style="text-align:left">反之， ptr--; --ptr; 都是在做指標的移動。</p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="height: auto; width: 600px; left: 180px; top: 103px;" data-block-id="9947989ec7d67b833842d9a300e0fb2b"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2>指標搭配 ++, -- 使用</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 664px; left: 180px; top: 196px;" data-block-id="da7f7e174aa50536942969c24513af06"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left">int array[10];</p>
+
+<p style="text-align:left">int *ptr = &amp;array[5];</p>
+
+<p style="text-align:left">*, ++, -- 有以下 4 種搭配用法</p>
+
+<ul>
+	<li>*ptr++; *ptr--;</li>
+	<li>(*ptr)++; (*ptr)--;</li>
+	<li>*++ptr; *--ptr;  or  *(++ptr); *(--ptr);</li>
+	<li>++*ptr; --*ptr;  or  ++(*ptr);  --*(ptr);</li>
+</ul>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="height: auto; width: 600px; left: 180px; top: 103px;" data-block-id="5e02260b2c3e0d750ec97838c90389a1"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2>指標搭配 ++, -- 使用</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 664px; left: 148px; top: 188px;" data-block-id="b20789525ad830323ef040c82ea0bead"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;" dir="ui">
+<ul>
+	<li>*ptr++; *ptr--; 
+	<ul>
+		<li><a href="http://en.cppreference.com/w/c/language/operator_precedence" target="_blank">Operator Precedence</a></li>
+	</ul>
+	</li>
+	<li>(*ptr)++; (*ptr)--;
+	<ul>
+		<li>​( ) 優先於任何運算</li>
+	</ul>
+	</li>
+	<li>*++ptr; *--ptr;  or  *(++ptr); *(--ptr);
+	<ul>
+		<li>看誰靠近 operand</li>
+	</ul>
+	</li>
+	<li>++*ptr; --*ptr;  or  ++(*ptr);  --*(ptr);
+	<ul>
+		<li>看誰靠近 operand</li>
+	</ul>
+	</li>
+</ul>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 92px; height: auto;" data-block-id="90eca75d8f1b48919e14bffbd086f054"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11;">
+<h1>小試身手 - 7.3</h1>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="121c4d9fdd07010c981384e11aa5bcd7" style="min-width: 30px; min-height: 30px; width: 640.9460869565218px; height: 352px; left: 160px; top: 200px;"><div class="sl-block-content" style="z-index: 12;"><img style="" data-natural-width="1047" data-natural-height="575" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1899318/_____2015-11-02___7.12.48.png"></div></div>
+<div class="sl-block" data-block-type="text" data-block-id="e3b9d4f39a23fac0e86ea42f3745949b" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 209px; top: 560px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p><span style="font-size:0.7em">git clone https://gist.github.com/2b7df42c336e616f3b67.git</span></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 860px; left: 40px; top: 128px; height: auto;" data-block-id="78610c2626f087163f125c31f5636931"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>在 C 裡面，允許指標的算術運算</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 238px; height: auto;" data-block-id="45f51d34211e17b844426d1d01cfbc2a"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<ul>
+	<li>
+<span style="color:#696969"><em>指標搭配常數作加減 </em></span>✓</li>
+	<li>
+<span style="color:#808080"><em>指標相減 </em></span><span style="color:rgb(17, 17, 17); text-align:left">✓</span>
+</li>
+	<li>
+<span style="color:#808080"><em>指標搭配  ++, -- 可以前置也可以後置 </em></span><span style="color:rgb(17, 17, 17); text-align:left">✓</span>
+</li>
+	<li>
+<span style="color:rgb(255, 0, 0)">注意</span>：運算子的優先權</li>
+</ul>
+
+<p style="text-align:left">                       eg: *ptr++; *++ptr;</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 648px; left: 156px; top: 447px;" data-block-id="f885d9576585ba4041f6146f8c8c3665"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;" dir="ui">
+<p style="text-align:left"><span style="font-size:0.7em">Operator precedence in C: </span></p>
+<p style="text-align:left"><a href="http://en.cppreference.com/w/c/language/operator_precedence" target="_blank"><span style="font-size:0.7em">http://en.cppreference.com/w/c/language/operator_precedence</span></a></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 270px; height: auto;" data-block-id="5bbc94d0cbc9196f16d787f3330962fe"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2><span style="font-size:0.9em">藉由前面的內容，你大概可以知道指標和 Array 是有些關聯的</span></h2>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 210px; height: auto;" data-block-id="cdf3adfb325b78a19327be8d69df63d2"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11;">
+<p style="text-align:left">其實在某些時候，<span style="color:#FF0000">陣列的名稱（有些書會寫作：陣列變數）</span>會被編譯器當成是指標處理。</p>
+
+<p style="text-align:left">例如：</p>
+
+<p style="text-align:left">對一個 integer array 傳入 function時，實際上編譯器會將 array 看成一個指標，指向 int 變數。所以 array 會被編譯器當成是<span style="color:#FF0000"> int *</span>。</p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="dfc20aca39c5de884592e6e0e5149ee8" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 180px; top: 103px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<h2>What's an Array?</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="1c5000dbc555598cf5b1d3ec0b1f12d3" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 166px; top: 479px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p> 什麼時候，做什麼樣的操作呢？才會被當成 pointer 處理？</p>
+</div></div></section><section><div class="sl-block" data-block-type="text" data-block-id="1dd14b2a9cff0a6322ee9e7354a69411" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 180px; top: 103px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2>將陣列傳入函式中使用</h2>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="32eaa3075cba5e5b4705a6203c2181ab" style="min-width: 30px; min-height: 30px; width: 360px; height: 304.5348837209302px; left: 300px; top: 197.5px;"><div class="sl-block-content" style="z-index: 12;"><img style="" data-natural-width="688" data-natural-height="582" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1899204/_____2015-11-02___6.03.32.png"></div></div>
+<div class="sl-block" data-block-type="image" data-block-id="f45b2c9ce82f95352731fa1ce79d7723" style="min-width: 30px; min-height: 30px; width: 480px; height: 406.04651162790697px; left: 240px; top: 191px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="688" data-natural-height="582" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1899204/_____2015-11-02___6.03.32.png"></div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 280px; height: auto;" data-block-id="1918a5de420368e5f7c31cfeffbaed8f"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h1>所以陣列就是指標囉？</h1>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 270px; height: auto;" data-block-id="166bacd0a82b1e139fa03053c8e8a890"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h1>大錯特錯！</h1>
+
+<p><s>Bullshxt</s> !</p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="8c2b44e746711adcf6f37d23d91d4300"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>陣列和指標的不同</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 198px; height: auto;" data-block-id="53d9a4e12d2518d25049dc05606c9f2d"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text">
+<ul>
+	<li><span style="font-size:0.7em">當你宣告一個陣列的時候，陣列的名稱並不會被配置記憶體儲存。而是類似 C 語言中的 Label 的形式。但是指標變數是會被儲存在記憶體中的。</span></li>
+	<li><span style="font-size:0.7em">sizeof <u>operator</u> : sizeof 是一個運算子（而非函式），可以在編譯期間，取得一個變數佔有的空間大小。</span></li>
+	<li><span style="font-size:0.7em">&amp; + array name 會被轉成為一個指標指向整個 array 大小的資料。（可利用 gdb</span></li>
+	<li><span style="font-size:0.7em">陣列名稱（陣列變數）不能指向其他地方，因為他不是指標，只是一個固定的 label，標示我從哪裡開始配置一個連續的記憶體當作陣列使用</span></li>
+</ul>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="26a6b030f1bf890998c5e8d5d3af478c"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>陣列和指標的不同</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 193px; height: auto;" data-block-id="ab2876a7585ea4a3fc871f4e1eabd8c3"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<ul>
+	<li>
+<span style="font-size:0.7em">sizeof </span><u>operator</u><span style="font-size:0.7em"> : sizeof 是一個運算子（而非函式），可以在<span style="color:#FF0000">編譯期間</span>，取得一個變數佔有的空間大小。</span>
+</li>
+</ul>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="00459a389ec03acadab5edf3ba0d12fc" style="min-width: 30px; min-height: 30px; width: 590.4915254237288px; height: 316px; left: 185px; top: 280px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="882" data-natural-height="472" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1899048/_____2015-11-02___4.56.35.png"></div></div></section><section><div class="sl-block" data-block-type="text" style="width: 823px; left: 69px; top: 167px; height: auto;" data-block-id="90c045a6bab7157faf88fbfbf6f5b7b8"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<p style="text-align:left">sizeof 運算子對指標變數運算的話，取得的會是指標變數的所需的空間大小。</p>
+
+<p style="text-align:left">指標變數可以是 int *, double *,  int (*)[10],  int *(*) 。這些變數用來儲存的記憶體的位址。</p>
+
+<p style="text-align:left">所以其大小最小要是能夠定址到每一個記憶體的 byte。假如今天是 4GB RAM 及 32-bit 電腦架構, 相當於有 2^32 個 bytes。為了定址這 2^32 個 byte，就要有 32 個 0, 1 來表示定址的位址。32 個 0, 1 及 32bits，相當於是 4bytes。所以在這樣的情況下指標的大小最小就是 4bytes</p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="0430b586d0dc93199c56738f72b8a1d4"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2>陣列和指標的不同</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 192px; height: auto;" data-block-id="4b0f706cfd15404ed971694095e0b967"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<ul>
+	<li><span style="font-size:0.7em">&amp; + array name 會被轉成為一個指標指向整個 array 大小的資料。</span></li>
+	<li><span style="font-size:21px">使用 gdb 查看</span></li>
+	<li><span style="font-size:21px">或是讓編譯器告訴你答案</span></li>
+</ul>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="b6846a93b00dfa085ec4b7e9544c9d4a" style="min-width: 30px; min-height: 30px; width: 552.9794520547946px; height: 241px; left: 204px; top: 319px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="670" data-natural-height="292" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1899069/_____2015-11-02___5.02.44.png"></div></div>
+<div class="sl-block" data-block-type="text" data-block-id="3a602559f9d385896a0b27de95ba631d" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 181px; top: 560px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14;">
+<p><span style="font-size:0.7em">git clone https://gist.github.com/07ed25cc9a90ccc5318d.git</span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="97c70765e47a0e639d6e9d92571e1d0c" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 340px; top: 231px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 15;">
+<p><a href="http://c-faq.com/aryptr/aryvsadr.html%E2%80%8B" target="_blank">http://c-faq.com/aryptr/aryvsadr.html​</a></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 230px; height: auto;" data-block-id="8495aaf0e1028799468b45b58fc7889a"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h1>不會用 gdb 沒關係</h1>
+
+<p>讓編譯器來告訴你！</p>
+
+<p>編譯參數加上  -Wall </p>
+
+<p>回家趕快學 gdb</p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="d4b021ca64974e69587abf98ce51feda"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2>陣列和指標的不同</h2>
+</div></div>
+<div class="sl-block" data-block-type="image" style="width: 552.9794520547946px; height: 241px; left: 204px; top: 319px;" data-block-id="f3c36742348147c1fd8774e8af638a55"><div class="sl-block-content" style="z-index: 12;"><img style="" data-natural-width="670" data-natural-height="292" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1899069/_____2015-11-02___5.02.44.png"></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 600px; left: 181px; top: 560px;" data-block-id="9988a9ba10e346c0263dfa9ea4ce6356"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p><span style="font-size:0.7em">git clone https://gist.github.com/07ed25cc9a90ccc5318d.git</span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="7bf982e02ddf6e589b86a9edb67bee46" style="height: auto; min-width: 30px; min-height: 30px; width: 888px; left: 29px; top: 177px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14;">
+<p style="color:rgb(255, 255, 255); text-align:left"><span style="font-size:0.7em"> <span style="color:#d53bd3">warning:</span><span style="color:#000000"> incompatible pointer types initializing 'int *' with an expression of type '</span><span style="color:#FF0000">int (*)[5]</span><span style="color:#000000">'</span></span></p>
+
+<p style="color:rgb(255, 255, 255); text-align:left"><span style="font-size:0.7em"><span style="color:#000000">      [-Wincompatible-pointer-types]</span></span></p>
+
+<p style="color:rgb(245, 245, 245); text-align:left"><span style="font-size:0.7em"><span style="color:#000000">        int *ptr = </span><span style="color:#FF0000">&amp;array</span><span style="color:#000000">;</span></span></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="47bf95f0aced4104763e894d7b8e652a"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2>陣列和指標的不同</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 198px; height: auto;" data-block-id="ad9b809b632355fb38ef981243030c21"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<ul>
+	<li><span style="font-size:0.7em">陣列名稱（陣列變數）不能指向其他地方，因為他不是指標，只是一個固定的 label，標示我從哪裡開始配置一個連續的記憶體當作陣列使用</span></li>
+</ul>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="bd4f9091829bd24d025803721db54bca" style="min-width: 30px; min-height: 30px; width: 360px; height: 285.2694610778443px; left: 300px; top: 293px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="501" data-natural-height="397" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1899070/_____2015-11-02___5.08.11.png"></div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="23491e01811607f5cea4708359f396d6"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2>陣列和指標的不同</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 89px; top: 177px; height: auto;" data-block-id="05be12dd52f16413f783dfc9a2198b6a"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<ul>
+	<li><span style="font-size:0.7em">陣列名稱（陣列變數）不能指向其他地方，因為他不是指標，只是一個固定的 label，標示我從哪裡開始配置一個連續的記憶體當作陣列使用</span></li>
+</ul>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="badb0e8861a6927069ea883760517856" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 144px; top: 255px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p><span style="font-size:0.7em">Why? 在 C 語言中有</span></p>
+
+<ul>
+	<li><span style="font-size:0.7em">左值 Lvalue</span></li>
+	<li><span style="font-size:0.7em">右值 Rvalue </span></li>
+</ul>
+
+<p style="text-align:left"><span style="font-size:0.7em">左值指的是實際在記憶體中佔有空間的內容。右值則是一個實際運算出的數值。左右之分，是因為放在 assignment 的左右邊而定名。但是！array name 雖然在 C 語言中佔有記憶體空間，可是卻無法修改。我們稱之為 <a href="https://www.google.com.tw/search?client=safari&amp;rls=en&amp;q=unmodifiable+lvalue&amp;ie=UTF-8&amp;oe=UTF-8&amp;gfe_rd=cr&amp;ei=Jz43Vvu6CIWH2QTu9bfwCA" target="_blank">unmodifiable lvalue</a></span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="42503bbe1deea2e1ed596eb676607cac" style="height: auto; min-width: 30px; min-height: 30px; width: 880px; left: 23px; top: 551px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14;">
+<p><span style="font-size:0.7em">參考資料 1: <a href="http://www.programmerinterview.com/index.php/c-cplusplus/l-values-r-value/" target="_blank">http://www.programmerinterview.com/index.php/c-cplusplus/l-values-r-value/</a></span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="ef76f10996b374240fb30321f4498788" style="height: auto; min-width: 30px; min-height: 30px; width: 489px; left: 21px; top: 581px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 15;">
+<p><span style="font-size:0.7em">參考資料 2: <a href="http://c-faq.com/aryptr/arraylval.html" target="_blank">http://c-faq.com/aryptr/arraylval.html</a></span></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="eee61bcdd6c1e7615b288e359104465c"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>陣列和指標的不同</h2>
+</div></div>
+<div class="sl-block" data-block-type="image" style="width: 360px; height: 285.2694610778443px; left: 300px; top: 293px;" data-block-id="14b213a91b662f7cf88c82d6d8c4bbf3"><div class="sl-block-content" style="z-index: 11;"><img style="" data-natural-width="501" data-natural-height="397" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1899070/_____2015-11-02___5.08.11.png"></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 180px; top: 194px;" data-block-id="c0d07c3900fafe4f7e5b32dc65544554"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p style="color:rgb(255, 255, 255)"> <span style="color:#c33720">error:</span><span style="color:#000000"> array type 'int [5]' is not assignable</span></p>
+
+<p style="color:rgb(245, 245, 245)"><span style="color:#000000">        array = array2;</span></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="e844d3885c7b7b2e32e361e4aa2e7bf2"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2>Pointer decay</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="e9fdb3504d3fff85a07fa9f92b971613" style="height: auto; min-width: 30px; min-height: 30px; width: 815px; left: 80px; top: 188px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left"><span style="font-size:0.9em">陣列其實會包含<span style="color:#FF0000">大小</span>的資訊 (由前面的 sizeof operator 可以看到 )。但是，當你把一個陣列指定 ( assign ) 給指標變數的時候，我們無法藉由指標變數來得知原本陣列的大小。這樣資訊流失的情況，被稱作是指標退化 ( <span style="color:#FF0000">pointer decay</span> )</span></p>
+
+<p style="text-align:left"><span style="font-size:0.9em">尤其是，當我們把陣列<span style="color:#FF0000">當作參數傳入函式</span>的時候，一定會發生這種情況。所以你必須做的事情是在使用函式的時候，一併將陣列大小   ( Array size ) 當作變數傳入。</span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="0d52a1f82c6ca136ea2fed98bf20efba" style="min-width: 30px; min-height: 30px; width: 360px; height: 93.20665083135391px; left: 280px; top: 484px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="421" data-natural-height="109" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1899095/_____2015-11-02___5.19.56.png"></div></div></section><section><div class="sl-block" data-block-type="text" style="width: 839px; left: 61px; top: 276px; height: auto;" data-block-id="ada78b67ebbf80bcc41e53faa423d5cf"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2> 在什麼時候，我們可以將 Array 和 Pointer 視作同等呢？</h2>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="9013000a85bb1a3048e2356be6ee91f2"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" dir="ui">
+<h2>指標和 Array 同等的情況</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 81px; top: 253px; height: auto;" data-block-id="0aa23fd9816b1fa327eb00760e90beb7"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text">
+<ol>
+	<li>作為 expression 時 ( 非用於宣告的時候 )，被編譯器當作是指向第一個元素的指標。</li>
+	<li>array name + [index] 相當於 *(pointer + offset);</li>
+	<li>用於函式當作宣告的參數型別時，array name 會被當作是指向 array 第一個元素的指標。</li>
+</ol>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="e027c823ea2a57d0e09feff9971fed3a"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" dir="ui" style="z-index: 11;">
+<h2>指標和 Array 同等的情況</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 218px; height: auto;" data-block-id="ff9679ed0cc705b191a14264c5fe8b13"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<ol>
+	<li style="text-align: left;">作為 expression 時 ( 非用於宣告的時候 )，被編譯器當作是指向第一個元素的指標。</li>
+</ol>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="d955c7f6ea8cb06ef543366c5334b4d1" style="height: auto; min-width: 30px; min-height: 30px; width: 276px; left: 320px; top: 312px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p style="color:rgb(17, 17, 17); text-align:left">int a[10];</p>
+
+<p style="color:rgb(17, 17, 17); text-align:left">int *p = NULL;</p>
+
+<p style="color:rgb(17, 17, 17); text-align:left"><span style="color:rgb(255, 0, 0)">p = a;</span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="fddc9c9d9b5f5739ebf6986ec7472584" style="height: auto; min-width: 30px; min-height: 30px; width: 760px; left: 90px; top: 457px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14;" dir="ui">
+<p style="text-align:left"><span style="font-size:0.7em">What's an expression? </span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">1.<a href="http://farside.ph.utexas.edu/teaching/329/lectures/node11.html" target="_blank">farside.ph.utexas.edu/teaching/329/lectures/node11.html</a></span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">2.<a href="https://en.wikipedia.org/wiki/Expression_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Expression_(computer_science)</a></span></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" data-block-id="03f60f687e27e0599907e0094da19394" style="height: auto; min-width: 30px; min-height: 30px; width: 879px; left: 41px; top: 185px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<p style="text-align:left">以下取自wikipedia:</p>
+
+<p style="text-align:left"><span style="color:rgb(37, 37, 37); text-align:start">An </span><strong>expression</strong><span style="color:rgb(37, 37, 37); text-align:start"> in a </span><a href="https://en.wikipedia.org/wiki/Programming_language" target="_blank">programming language</a><span style="color:rgb(37, 37, 37); text-align:start"> is a combination of one or more explicit </span><a href="https://en.wikipedia.org/wiki/Value_(computer_science)" target="_blank">values</a><span style="color:rgb(37, 37, 37); text-align:start">, </span><a href="https://en.wikipedia.org/wiki/Constant_(programming)" target="_blank">constants</a><span style="color:rgb(37, 37, 37); text-align:start">, </span><a href="https://en.wikipedia.org/wiki/Variable_(programming)" target="_blank">variables</a><span style="color:rgb(37, 37, 37); text-align:start">, </span><a href="https://en.wikipedia.org/wiki/Operator_(programming)" target="_blank">operators</a><span style="color:rgb(37, 37, 37); text-align:start">, and</span><span style="color:#FF0000"><span style="text-align:start"> </span></span><a href="https://en.wikipedia.org/wiki/Function_(programming)" target="_blank"><span style="color:#FF0000">functions</span></a><span style="color:#FF0000"><span style="text-align:start"> </span></span><span style="color:rgb(37, 37, 37); text-align:start">that the programming language interprets (according to its particular </span><a href="https://en.wikipedia.org/wiki/Order_of_operations" target="_blank">rules of precedence</a><span style="color:rgb(37, 37, 37); text-align:start"> and of asso-ciation) and computes to produce ("to return", in a </span><a href="https://en.wikipedia.org/wiki/State_(computer_science)" target="_blank">stateful</a><span style="color:rgb(37, 37, 37); text-align:start"> en-vironment) another value.</span></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="1403976c7764566bf733bf96c26808b6"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" dir="ui">
+<h2>指標和 Array 同等的情況</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 825px; left: 80px; top: 210px; height: auto;" data-block-id="46d7573f1806dda3e2052a7a8d1f5dbe"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text">
+<p style="text-align:left">2. array name + [index] 相當於 *(pointer + offset);</p>
+
+<ul>
+	<li style="text-align:left">eg:</li>
+	<li style="text-align:left">int array[5] = {1, 2, 3, 4, 5};</li>
+	<li style="text-align:left">array[3] 即是 *(array + 3)</li>
+</ul>
+
+<p style="text-align:left">以往，有人會認為將 array + [index] 寫成 *(pointer + offset)的形式，執行效能會比較快。但是，在現今的編譯器來說，已經做了相當程度的最佳化，編譯出來的組合語言是一樣的。所以在執行效能上沒有太大差別，應該著重於語意表達。</p>
+
+<p> </p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="3b6c76067a4bb30208bad0bc576bd20c"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" dir="ui" style="z-index: 10;">
+<h2>指標和 Array 同等的情況</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 210px; height: auto;" data-block-id="f4832bf01cc9843b9bb8a2830ba1ebf7"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<p style="text-align:left">3. 用於函式當作宣告的參數型別時，array name 會被當作是指向 array 第一個元素的指標。<br>
+ </p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="4dbf1058e151967bd30d11bde3ab7d50" style="height: auto; min-width: 30px; min-height: 30px; width: 647px; left: 166px; top: 306px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p style="text-align:left">Why? 因為 C 語言只有<span style="color:#FF0000"> Pass by Value</span> 的概念，我們只有藉由 Pass address 給 function，藉由 address 和記憶體做連結，才可以取得 array 的內容。( pass by value 是複製 address 的數值給 formal parameter )</p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="128ad983ed66af2b0447b8ed4b5d50b2"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" dir="ui" style="z-index: 11;">
+<h2>指標和 Array 同等的情況</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 233px; height: auto;" data-block-id="b65dfa4a84d34caff334a95089e097b8"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left">3. 用於函式當作宣告的參數型別時，array name 會被當作是指向 array 第一個元素的指標。<br>
+ </p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="77b85886db5e51ab046d5d43e9834a8e" style="min-width: 30px; min-height: 30px; width: 360px; height: 159.03177004538577px; left: 112px; top: 327px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="661" data-natural-height="292" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1899293/_____2015-11-02___6.57.33.png"></div></div>
+<div class="sl-block" data-block-type="image" data-block-id="f1f44b6197c41e6f9000bbc8e405a102" style="min-width: 30px; min-height: 30px; width: 366.3448275862069px; height: 160px; left: 498px; top: 330px;"><div class="sl-block-content" style="z-index: 14;"><img style="" data-natural-width="664" data-natural-height="290" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1899295/_____2015-11-02___6.58.22.png"></div></div>
+<div class="sl-block" data-block-type="text" data-block-id="0effa1ffbc2731804721321220950cad" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 180px; top: 521px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 15;" dir="ui">
+<p>以上兩種參數對編譯器來說都會轉成是 int *</p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 300px; height: auto;" data-block-id="958f128e205eaa2aa42ad2ce01159e88"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h3 style="text-align:left">為什麼 C 語言在設計的時候，要將傳入的function 的 Array 當作是指標看待？</h3>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 275px; height: auto;" data-block-id="2dfd58bbd9837572254e7199de7cd2b6"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h3 style="text-align:left">在 C 語言裡面只有<span style="color:#FF0000">數值 ( value ) </span>的概念。當你傳遞參數的時候，就是將 argument 的數值<span style="color:#FF0000">複製</span>一次。</h3>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 275px; height: auto;" data-block-id="c544ffe89cb4cbdc2b8d7146e5c5a1dd"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h3 style="text-align:left">如果你今天傳遞 Array 要把整個 Array 複製一次？C 是用來寫底層系統的語言！這開銷太大了！（所以程式設計師要小心管理記憶體）</h3>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="da420db7fa8477a4baab1665aca76a03"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" dir="ui">
+<h2>指標和 Array 同等的情況</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 244px; height: auto;" data-block-id="da1810f24f33ef32aa4e48cc5c12254b"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text">
+<ol>
+	<li>作為 expression 時 ( 非用於宣告的時候 )，被編譯器當作是指向第一個元素的指標。</li>
+	<li>array name + [index] 相當於 *(pointer + offset);</li>
+	<li>用於函式當作宣告的參數型別時，array name 會被當作是指向 array 第一個元素的指標。</li>
+</ol>
+</div></div></section><section><div class="sl-block" data-block-type="text" data-block-id="64ac4a17c7732de2430600785a1ca990" style="height: auto; min-width: 30px; min-height: 30px; width: 700px; left: 130px; top: 276px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2>以上就是你可以將 Array, Pointer 視為同等的情況</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="bf0e4b47c5c6c9ded680ed57b3f2e659" style="height: auto; min-width: 30px; min-height: 30px; width: 300px; left: 130px; top: 191px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p>以編譯器的角度看</p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 270px; height: auto;" data-block-id="a88c6efbe4d592776023e606344d50c3"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h1>但是你必須將一句話記在心裡</h1>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 302px; height: auto;" data-block-id="64edff170b0b6d1916218dd9c47705a8"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h1>Array 不是 Pointer !!</h1>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 276px; height: auto;" data-block-id="68b3e1301ed3136ad28b2dec87f04520"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>說了這麼多，我們來談談如何應用在 Function</h2>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 276px; height: auto;" data-block-id="0ad2bcdf7f3dfbef660432d747630ba9"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2>上一份投影片跟我們說指標間單來說有兩種應用方式</h2>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 216px; height: auto;" data-block-id="4c57e14b03aa91c88a8eac1322f21692"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>Pointer 的常見應用</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 319px; height: auto;" data-block-id="a1fae55d50f7bdd3a9c88a7aa42bd07d"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text">
+<p style="color:rgb(17, 17, 17)"><span style="font-size:0.9em">Type1: Function 可以修改 Function 外的變數</span></p>
+
+<p style="color:rgb(17, 17, 17)"><span style="font-size:0.9em">Type2: 傳遞<span style="color:rgb(255, 0, 0)">連續</span>的記憶體資料。(array, string)</span></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 258px; height: auto;" data-block-id="80bde408805a6630ab8a3bea638848ec"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2>接下來要介紹的就是Type2</h2>
+
+<p><span style="color:rgb(17, 17, 17)">Type2: 傳遞</span><span style="color:rgb(255, 0, 0)">連續</span><span style="color:rgb(17, 17, 17)">的記憶體資料。(array, string)</span></p>
+
+<p><span style="color:#000000">int scanf(</span><span style="color:#FF0000">const char *</span><span style="color:#000000">restrict format, ...);</span></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 276px; height: auto;" data-block-id="1232a9fb1f58adbf3b5c623fbb08e72e"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2>在 C 語言中， string 和 array 有何不同？</h2>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 189px; height: auto;" data-block-id="b9534833f4769cc57d78aaee9b4a03ff"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;">
+<h3 style="text-align:left">Cstring 其實是在一個連續的記憶體中，將每一個資料以 char 的方式儲存與解讀，最後以 <span style="color:#FF0000">null character 標記結尾 &lt;---- 不同處</span>
+</h3>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="68f828efc96a9b7fa415d03b8623f62b" style="min-width: 30px; min-height: 30px; width: 516.020942408377px; height: 176px; left: 213px; top: 359px;"><div class="sl-block-content" style="z-index: 12;"><img style="" data-natural-width="560" data-natural-height="191" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1912628/string_representation.jpg"></div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 276px; height: auto;" data-block-id="b53b8bad7c5377acf5fdec71b3030082"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2>我們如何傳遞一個 Cstring 給 function?</h2>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 234px; height: auto;" data-block-id="e42f8528d9834d4103168bfb0360f694"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;">
+<h2>我們如何傳遞一個 Cstring 給 function?</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="c344bb781fc4c174c310207e24c1849d" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 180px; top: 410px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<h3><span style="color:#FF0000">傳遞第一個元素的位址</span></h3>
+</div></div></section><section><div class="sl-block" data-block-type="image" data-block-id="77731e38bf447da6507941ee3ebe900f" style="min-width: 30px; min-height: 30px; width: 484.8347953216374px; height: 401px; left: 238px; top: 188px;"><div class="sl-block-content" style="z-index: 11;"><img style="" data-natural-width="827" data-natural-height="684" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1912685/_____2015-11-05___3.13.37.png"></div></div>
+<div class="sl-block" data-block-type="text" data-block-id="5e053d7a1de539383d7a5861fae9d975" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 180px; top: 76px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<h2>Example </h2>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="13984f82083cb6357f7f40f8d20b18e5" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 180px; top: 140px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p><span style="font-size:0.7em">(畫圖講解)</span></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" data-block-id="1febd911352538e6614a4b34a3c9edc7" style="height: auto; min-width: 30px; min-height: 30px; width: 791px; left: 85px; top: 151px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;" dir="ui">
+<p style="text-align:left">為什麼使用 char * 這樣的指標行別來存取 string 內容？</p>
+<p style="text-align:left"><br></p>
+<p style="text-align:left">因為對於 string 來說，每一個元素都是 <span style="color:#FF0000;">char </span>的型別，我們使用指標搭配<span style="color:#FF0000;">指標移動</span>可以存取在記憶體中連續的資料，這個資料是 char，所以我們使用<span style="color:#FF0000;"> char *</span> 這樣的指標。</p>
+<p style="text-align:left">1. 可以存取字串中的資料單元</p>
+<p style="text-align:left">2. 可以藉由遞移指標完成整個字串的查找</p>
+<p style="text-align:left"><br></p>
+<p style="text-align:left">const 則是標記我們不會藉由指標更改記憶體中的內容</p>
+<p style="text-align:left"><br></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="height: auto; width: 600px; left: 180px; top: 76px;" data-block-id="59c6a17367ef5c8a422b66ba74a08bea"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2>小試身手8</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 600px; left: 180px; top: 150px;" data-block-id="bf6786ff78400d5de5c3195c231ba69a"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left"><span style="font-size:21px">請實作 print_arr 這個函式，讓他能夠印出一維陣列中的每一個元素。請不要偷看前面的內容，誠實面對自己。你偷看了，寫對了不代表你真的學會！</span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="7370a22bbadb5bf5f7d86cbf4ecbb624" style="min-width: 30px; min-height: 30px; width: 552px; height: 308.0220994475138px; left: 204px; top: 289px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="905" data-natural-height="505" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1912708/_____2015-11-05___3.23.49.png"></div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 160px; height: auto;" data-block-id="a140a0c67bb96443e0707aad7277a6d4"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11;">
+<h3>一維陣列傳入 function 時，靠近 array 名稱 的維度會被衰退為指標做使用，說衰退是因為只知道第一個元素的位址，但是不知道有多少元素</h3>
+
+<p>int array[10] ----&gt;  int (*array);</p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="c2d72264e00567baf903322781b4fade" style="height: auto; min-width: 30px; min-height: 30px; width: 893px; left: 34px; top: 441px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p>但是由於衰退了</p>
+
+<p><span style="color:#FF0000">不知道存取到何時才結束（ size 的資訊不見了！）</span></p>
+
+<p><span style="color:#000000">所以為什麼小試身手8 要給定 size，Cstring呢？</span></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 249px; height: auto;" data-block-id="a6ff149b7deaf1872eda436106b50caf"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;">
+<ul>
+	<li>char str[] ---&gt; char (*str) ---&gt; <span style="color:#FF0000">char *str</span> </li>
+	<li>char *c[15] ---&gt; char *(*c) ---&gt; <span style="color:#FF0000">char **c</span>
+</li>
+	<li>char *c  ---&gt; char **c ?</li>
+	<li>char (*c)[64]  ---&gt; ???</li>
+</ul>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="ccf7bbdd03eba9ea5ffb6732bdd6c296" style="height: auto; min-width: 30px; min-height: 30px; width: 693px; left: 134px; top: 136px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<h2>其他陣列衰退為指標的例子</h2>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 88px; top: 248px; height: auto;" data-block-id="8677280fb0a753182b761b3f7c31da96"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;">
+<ul>
+	<li><span style="font-size:0.7em">char str[] ---&gt; char (*str) ---&gt; <span style="color:#FF0000">char *str</span> </span></li>
+	<li><span style="font-size:0.7em">char *c[15] ---&gt; char *(*c) ---&gt; <span style="color:#FF0000">char **c</span></span></li>
+	<li><span style="font-size:0.7em">char *c  ---&gt; <s>char **c ? </s> <span style="color:#FF0000">這時候就不是 type2的問題了，如果要使用 function 修改 char *c 的資料才需要傳入 c 的位址 ( char ** )</span></span></li>
+	<li><span style="font-size:0.7em">char (*c)[64]  ---&gt; ??? 不需做改變。因為原本只是知道 c 指向一個 char [64] 的區塊，所以 c 可以存放區塊第一個元素的位址。同樣的傳進參數的時候，也可以只知道第一個元素的位址。那 [64] 是做什麼用的？讓我們解析區塊大小，讓編譯器精準定位出元素所在。c+1時，會移動到下一個 char [64] 的區塊。</span></li>
+</ul>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 693px; left: 134px; top: 136px;" data-block-id="298982bad5cdbd2c9b661f9a56b7459c"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<h2>其他陣列衰退為指標的例子</h2>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="ac7d931535ddb8755f279a8eba14f65f"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2>舉例 char (*c)[5]</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="a2bace0be237cca83f679437304428da" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 180px; top: 167px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left"><span style="font-size:0.7em">p.37</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em"><span style="color:rgb(17, 17, 17); text-align:left">&amp; + array name 會被轉成為一個指標指向整個 array 大小的資料。那 s[1], s[2] 呢？（畫圖</span></span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="c2b7f5aec754afc6c43b22d5a27586b6" style="min-width: 30px; min-height: 30px; width: 443.98974358974357px; height: 292px; left: 258px; top: 302px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="593" data-natural-height="390" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1912822/_____2015-11-05___4.10.39.png"></div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="f7d03c16faa107bb862e5919dea18f7c"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11;">
+<h2>舉例 char (*c)[5]</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 600px; left: 180px; top: 167px;" data-block-id="318baaf8ccadedfce85e809f5c923556"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left"><span style="font-size:0.7em">p.37</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em"><span style="color:rgb(17, 17, 17); text-align:left">&amp; + array name 會被轉成為一個指標指向整個 array 大小的資料。那 s[1], s[2] , </span><span style="color:#FF0000"><span style="text-align:left">s[0][0], s[0][1], s[0][2]</span></span><span style="color:rgb(17, 17, 17); text-align:left"> 呢？</span></span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="4f873479ec461386e95424801ae751bf" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 180px; top: 357px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<h1>拜託用 GDB</h1>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 294px; height: auto;" data-block-id="63f5580a78461cc090fef1268c327016"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h2>有沒有多維陣列的感覺？</h2>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 190px; height: auto;" data-block-id="05a882c1e460dfff889045ba134036bb"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>多維陣列</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 272px; height: auto;" data-block-id="982db30ef53b1846412ec598cfcc4689"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text">
+<ul>
+	<li>不管如何，在記憶體中都是一維的！</li>
+	<li>多維陣列其實是一維陣列中的元素是另一維陣列</li>
+	<li>傳入的時候一樣傳入陣列名稱，但是他會轉成什麼？</li>
+</ul>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 270px; height: auto;" data-block-id="1b8182e83e563c9fabf20f35b1063a3a"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h3>要將陣列傳入 function時，你必須要讓編譯器能夠正確的解析存取位址</h3>
+
+<p>前面的例子:  char (*s)[5] 為麼要有 5 ?</p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 275px; height: auto;" data-block-id="f2fbab84a19f8a1a31dec88f08112074"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h3 style="text-align: left;">如果今天沒有 [5] 你在存取 s[1][2]的時候，經過第一個 row 他會以為一個 row 有幾個元素？那我們怎麼存取到 s[1]<span style="color:#FF0000">[2]</span> ? (遞增正確的 row )</h3>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 260px; height: auto;" data-block-id="9893191e794563ee9530c1ed9bae1dab"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h3 style="text-align:left">傳入陣列的時候，只會將一個維度退化為指標，其他維度都要保留，否則無法提供足夠的資訊給 compiler 去取得正確的位址，進一步解析資訊</h3>
+</div></div></section><section><div class="sl-block" data-block-type="text" data-block-id="4e99cbc17ab5a3b49e21dae9be4d6c01" style="height: auto; min-width: 30px; min-height: 30px; width: 780px; left: 90px; top: 78px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2 style="text-align: left;">如何將二維陣列傳入 function</h2>
+
+<p style="text-align: left;">以 int array[3][4] 為例</p>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="72ecbd275ae36026587c3af82eb7345e" style="height: auto; min-width: 30px; min-height: 30px; width: 353px; left: 80px; top: 218px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left"><span style="color:#FF0000">method1</span>: </p>
+
+<p style="text-align:left">優點：無腦好寫</p>
+
+<p style="text-align:left">缺點：array如果是[4][4] 就沒辦法使用了！</p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="a5dcc98520d98cc6e82a11b8736b78c8" style="min-width: 30px; min-height: 30px; width: 436.26666666666665px; height: 409px; left: 434px; top: 170px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="960" data-natural-height="900" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1912975/_____2015-11-05___5.07.12.png"></div></div>
+<div class="sl-block" data-block-type="text" data-block-id="553091b21a95345f39384fc6b0a325b6" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 160px; top: 591px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14;">
+<p><span style="font-size:0.7em">git clone https://gist.github.com/8e29e0b494e86bb783d9.git</span></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="height: auto; width: 780px; left: 90px; top: 78px;" data-block-id="b049dc6a19ac2ca03f5a5750e0f8dda5"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2 style="text-align: left;">如何將二維陣列傳入 function</h2>
+
+<p style="text-align: left;">以 int array[3][4] 為例</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 353px; left: 71px; top: 223px;" data-block-id="0a5da6aa2c6f587cc115ce7f066d621f"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left"><span style="color:#FF0000">method1</span>: </p>
+
+<p style="text-align:left">試試看，請問第 12, 13行的結果是什麼？</p>
+
+<p style="text-align:left"> </p>
+
+<p style="text-align:left">為什麼會這樣？</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 600px; left: 160px; top: 591px;" data-block-id="348a8c38030cf9094e669e8be6caa287"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p><span style="font-size:0.7em">git clone https://gist.github.com/8e29e0b494e86bb783d9.git</span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="b3a128d70b0fecfcdf9daa61b7464099" style="min-width: 30px; min-height: 30px; width: 491.10362694300517px; height: 317px; left: 424px; top: 210px;"><div class="sl-block-content" style="z-index: 14;"><img style="" data-natural-width="897" data-natural-height="579" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1912991/_____2015-11-05___5.14.43.png"></div></div></section><section><div class="sl-block" data-block-type="text" style="height: auto; width: 780px; left: 90px; top: 78px;" data-block-id="a36aed9929efabe96e79b51b793b484b"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2 style="text-align: left;">如何將二維陣列傳入 function</h2>
+
+<p style="text-align: left;">以 int array[3][4] 為例</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 353px; left: 71px; top: 223px;" data-block-id="7c1fb9677573b9e8914f318976714e94"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left"><span style="font-size:0.7em">試試看，請問第 12, 13行的結果是什麼？</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">12 行：因為我們傳入的 arr 會轉成為 int (*)[4] 是一個指標，對 64bits 系統來說，指標的大小會是 8 bytes</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">13行：因為我們給予編譯器 arr的資訊是 int [3][4] 所以可以知道他每一個 row 有 int [4] 的大小於是就會是 16</span></p>
+
+<p style="text-align:left"><span style="font-size:0.7em">sizeof 是編譯時期就能取的資訊的 operator</span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" style="width: 491.10362694300517px; height: 317px; left: 436px; top: 237px;" data-block-id="9c13f094546ae326c290505f057d5f16"><div class="sl-block-content" style="z-index: 14;"><img style="" data-natural-width="897" data-natural-height="579" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1912991/_____2015-11-05___5.14.43.png"></div></div></section><section><div class="sl-block" data-block-type="text" style="height: auto; width: 780px; left: 90px; top: 78px;" data-block-id="c91262ce09fef13cdd7c990a49f6d672"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2 style="text-align: left;">如何將二維陣列傳入 function</h2>
+
+<p style="text-align: left;">以 int array[3][4] 為例</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 353px; left: 71px; top: 223px;" data-block-id="84508e035ae60a05e4ecc6637e29d05e"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left"><span style="color:#FF0000">method2</span>: </p>
+
+<p style="text-align:left">為了讓它更有彈性！我們的參數是 int (*arr)[4]</p>
+
+<p style="text-align:left"> </p>
+
+<p style="text-align:left">這樣就能讓 int [1][4], int [3][4] .... int [100][4] 這樣的陣列都可以使用了!</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 600px; left: 160px; top: 598px;" data-block-id="bb4d7b6d5588014fef824c13d4e5ebe1"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p><span style="font-size:0.7em">git clone https://gist.github.com/c987c42713b421587d91.git</span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="a7ad8e4cf44efbdca3c28d7c4856130f" style="min-width: 30px; min-height: 30px; width: 377.91111111111115px; height: 440px; left: 473px; top: 158px;"><div class="sl-block-content" style="z-index: 14;"><img data-natural-width="773" data-natural-height="900" style="" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1913008/_____2015-11-05___5.22.30.png"></div></div>
+<div class="sl-block" data-block-type="text" data-block-id="ece108c19409bcd4187115795119fa0e" style="height: auto; min-width: 30px; min-height: 30px; width: 241px; left: 120px; top: 567px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 15;">
+<p>親手打看看</p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="height: auto; width: 780px; left: 90px; top: 78px;" data-block-id="e0e6c76c17bf7fd069b57cfa707a7dd2"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2 style="text-align: left;">如何將二維陣列傳入 function</h2>
+
+<p style="text-align: left;">以 int array[3][4] 為例</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 353px; left: 90px; top: 219px;" data-block-id="498f5af844916426a8e565f87eca8a81"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left"><span style="color:#FF0000">method2</span>: </p>
+
+<p style="text-align:left">其實參數 int (*arr)[4] 相當於 int arr[][4]。所以在這裡可以互換！</p>
+
+<p style="text-align:left"> </p>
+
+<p style="text-align:left">因為我們說 array 在當參數值，靠近名稱的維度會退化！</p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 600px; left: 160px; top: 598px;" data-block-id="5214fa8e32e6838d8e273cd5146748ec"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p><span style="font-size:0.7em">git clone https://gist.github.com/c987c42713b421587d91.git</span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" style="width: 377.91111111111115px; height: 440px; left: 473px; top: 158px;" data-block-id="4452d8d7041008ffcca79cc8b02e8e44"><div class="sl-block-content" style="z-index: 14;"><img data-natural-width="773" data-natural-height="900" style="" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1913008/_____2015-11-05___5.22.30.png"></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 241px; left: 120px; top: 567px;" data-block-id="658b8c085322c225243376eabf07e962"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 15;">
+<p>親手打看看</p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="height: auto; width: 780px; left: 90px; top: 78px;" data-block-id="7d613eae3ce67d39a00e428625a7efda"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2 style="text-align:left">如何將二維陣列傳入 function</h2>
+
+<p style="text-align:left"><span style="font-size:1.0em"><span style="color:#FF0000">在這裡就不能以 int arrat[3][4] 為例了</span></span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 353px; left: 90px; top: 219px;" data-block-id="13181d7380fddb7edd54d37e4f5c5ecc"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left"><span style="color:#FF0000">method3</span>: </p>
+
+<p style="text-align:left">在參數中，int ** 和 int  (*)[4] 顯然是有差距的，後者知道大小 ( array ) ，但是前者只知道他是一個指標，指向另一個指標。</p>
+
+<p style="text-align:left"> </p>
+
+<p style="text-align:left"><span style="color:#FF0000">常用於動態配置記憶體</span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 600px; left: 150px; top: 606px;" data-block-id="5063ad26ea7fba92b29a2c0efccbe405"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13;">
+<p><span style="font-size:0.7em">git clone https://gist.github.com/ff414ea9a487fde3049e.git</span></p>
+</div></div>
+<div class="sl-block" data-block-type="image" data-block-id="a8a855147c1cb4be45ac501870c8659b" style="min-width: 30px; min-height: 30px; width: 410.53872832369944px; height: 404px; left: 459.46127167630056px; top: 202px;"><div class="sl-block-content" style="z-index: 15;"><img style="" data-natural-width="879" data-natural-height="865" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1913114/_____2015-11-05___5.41.16.png"></div></div></section><section><div class="sl-block" data-block-type="text" style="height: auto; width: 780px; left: 90px; top: 78px;" data-block-id="cfd85fd3223fd93f6d3845ff077dba95"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2 style="text-align:left">如何將二維陣列傳入 function</h2>
+
+<p style="text-align:left"><span style="font-size:1.0em"><span style="color:#FF0000">在這裡就不能以 int arrat[3][4] 為例了</span></span></p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 802px; left: 90px; top: 219px;" data-block-id="c27c8c2495ce1270a84868000f8fe345"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left"><span style="color:#FF0000">method3</span>: </p>
+
+<p style="text-align:left">不覺得這很像是</p>
+
+<p style="text-align:left">int main(int argc, char **argv);  </p>
+
+<p style="text-align:left">int main(int argc,  char *argv[]);  </p>
+
+<p style="text-align:left">// char *argv[] ---&gt; char *(*argv)</p>
+
+<p style="text-align:left">為什麼這裡只需要用一個 argc<span style="color:#FF0000"> 標記字串的個數</span>？</p>
+
+<p style="text-align:left">也就是 char *argv<span style="color:#FF0000">[]</span></p>
+
+<pre style="text-align: left;"><font color="#ff0000">Iliffe vector</font></pre>
+</div></div>
+
+</section><section><div class="sl-block" data-block-type="text" style="height: auto; width: 780px; left: 90px; top: 78px;" data-block-id="58b56101e9601ac4b75ff35d33205f01"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2 style="text-align:left">如何將二維陣列傳入 function</h2>
+
+<p style="text-align:left"> </p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 723px; left: 90px; top: 241px;" data-block-id="917cb3badbd6661f1b824937220691f3"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left"><span style="color:#FF0000">method4</span>: </p>
+
+<p style="text-align:left">既然...... 陣列在記憶體其實只是一個連續的空間</p>
+
+<p style="text-align:left">那我們當然可以用一維陣列來模擬二維的行為呀！</p>
+
+<p style="text-align:left"> </p>
+</div></div>
+
+</section><section><div class="sl-block" data-block-type="text" style="height: auto; width: 780px; left: 90px; top: 78px;" data-block-id="9d6460809ad613c2c9eaef3d1f9cb812"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<h2 style="text-align:left">如何將二維陣列傳入 function</h2>
+
+<p style="text-align:left"> </p>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 289px; left: 111px; top: 181px;" data-block-id="a0a052b7eacc706f40633fd775d1266a"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<p style="text-align:left"><span style="color:#FF0000">method4</span>: </p>
+
+<p style="text-align:left">用一維陣列模擬二維行為</p>
+</div></div>
+
+<div class="sl-block" data-block-type="image" data-block-id="64907b7948ccc294e9ad0ae9e2d5a7a9" style="min-width: 30px; min-height: 30px; width: 429.42px; height: 421px; left: 415px; top: 170px;"><div class="sl-block-content" style="z-index: 13;"><img style="" data-natural-width="918" data-natural-height="900" data-src="https://s3.amazonaws.com/media-p.slid.es/uploads/382096/images/1913240/_____2015-11-05___6.02.57.png"></div></div>
+<div class="sl-block" data-block-type="text" data-block-id="952fd8fe0bff9712ae71e5928f0a9301" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 180px; top: 591px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14;">
+<p><span style="font-size:0.7em">git clone https://gist.github.com/2ac87731c30ce4499392.git</span></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" data-block-id="2a004fd40323e40d5489eeb0b7c0d9c6" style="height: auto; min-width: 30px; min-height: 30px; width: 670px; left: 130px; top: 210px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;">
+<p style="text-align:left">Array and Pointer:</p>
+
+<ul>
+	<li style="text-align: left;"><a href="http://stackoverflow.com/questions/3911400/how-to-pass-2d-array-matrix-in-a-function-in-c" target="_blank">How to pass 2D array (matrix) in a function in C?</a></li>
+	<li style="text-align: left;"><a href="http://pw1.netcom.com/~tjensen/ptr/pointers.htm" target="_blank"><strong>A TUTORIAL ON POINTERS AND ARRAYS IN C</strong></a></li>
+	<li style="text-align: left;"><a href="http://programming.im.ncnu.edu.tw/Chapter12.htm" target="_blank">http://programming.im.ncnu.edu.tw/Chapter12.htm​</a></li>
+	<li style="text-align: left;"><a href="https://myex.hackpad.com/Array-versus-Pointer-qFKq6cIce4h" target="_blank">自己的閱讀記錄</a></li>
+</ul>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="4e3440f21995b3c2abfb49d603c63e83" style="height: auto; min-width: 30px; min-height: 30px; width: 277px; left: 145px; top: 87px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<h2>參考資料</h2>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 248px; height: auto;" data-block-id="b349f589c6c15ac20443e896ee94deec"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text">
+<h3>目前為止</h3>
+
+<p><span>int scanf(</span><span style="color:rgb(255, 0, 0)">const char *</span><span>restrict format, ...);</span></p>
+
+<p><span>你們應該懂上面 const char * 的意義了</span></p>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 103px; height: auto;" data-block-id="cccd1f90e7189dcc61753652dd12dffd"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text">
+<h2>本投影片沒有涵蓋的內容</h2>
+</div></div>
+<div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 230px; height: auto;" data-block-id="a1b5d32a99d16c44f6e4136d75be88bd"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text">
+<ul>
+	<li>extern declaration and array:</li>
+</ul>
+
+<p>int array[10];</p>
+
+<p>extern int *array;</p>
+
+<p>extern int array[];</p>
+
+<ul>
+	<li>A pointer to function 指標也可以指向函式</li>
+	<li>動態記憶體分配 malloc, free</li>
+	<li>
+<a href="https://en.wikipedia.org/wiki/Variable-length_array" target="_blank">VLA</a> in function</li>
+</ul>
+</div></div></section><section><div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 92px; height: auto;" data-block-id="8c7094931474b29fad278f0780b64ec8"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;">
+<h1>參考資料</h1>
+</div></div>
+<div class="sl-block" data-block-type="text" data-block-id="0282f50db86037f584783239fb03c669" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 180px; top: 232px;"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12;">
+<ul>
+	<li><a href="http://www.amazon.com/Programming-Language-Brian-W-Kernighan/dp/0131103628/ref=sr_1_1?ie=UTF8&amp;qid=1446718723&amp;sr=8-1&amp;keywords=C+programming" target="_blank">The C programming Language</a></li>
+	<li><a href="http://www.amazon.com/Expert-Programming-Peter-van-Linden/dp/0131774298/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1446718751&amp;sr=1-1&amp;keywords=expert+c+programming" target="_blank">Expert C programming - Deep C Secrets</a></li>
+	<li><a href="http://www.amazon.com/C-Programming-Modern-Approach-2nd/dp/0393979504/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1446718775&amp;sr=1-1&amp;keywords=c+modern+approach" target="_blank">C programming - A Modern Approach</a></li>
+	<li><a href="http://www.books.com.tw/products/0010558590" target="_blank">由片語學習 C 程式設計</a></li>
+	<li><a href="http://shop.oreilly.com/product/0636920015482.do" target="_blank">Head First C</a></li>
+</ul>
+</div></div></section>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="deck-kudos">
+		<button class="kudos-button kudos-trigger" data-kudos-id="529962" data-kudoed-by-user="false">
+			<div class="kudos-heart">
+				<span class="kudos-icon icon i-heart-fill"></span>
+			</div>
+			<div class="kudos-count" data-kudos-value="5" data-kudos-id="529962"></div>
+		</button>
+	</div>
+
+	<div class="pill summary-pill">
+		<div class="pill-picture" style="background-image: url(https://lh6.googleusercontent.com/-jFXm7uS4At8/AAAAAAAAAAI/AAAAAAAAARM/RCcA8oJ3rwU/photo.jpg?sz=50)"></div>
+		<div class="pill-content">
+			<h4 class="pill-title">C 指標 Pointer part2</h4>
+			<p class="pill-description">By Jie-Han Chen</p>
+		</div>
+	</div>
+
+	<div class="pill instructions-pill">
+		<div class="pill-picture"></div>
+		<div class="pill-content">
+			<h4 class="pill-title"></h4>
+			<p class="pill-description"></p>
+		</div>
+	</div>
+
+</div>
+
+<div class="column">
+	<header class="deck-info">
+		<div class="deck-social">
+			<a href="#" class="deck-social-button facebook-share-button" data-tooltip="Share on Facebook">
+				<span class="icon i-facebook"></span>
+			</a>
+			<a href="#" class="deck-social-button twitter-share-button" data-tooltip="Share on Twitter">
+				<span class="icon i-twitter"></span>
+			</a>
+			<a href="#" class="deck-social-button google-share-button" data-tooltip="Share on Google+">
+			</a>
+		</div>
+
+		<div class="deck-promotion">
+			<a class="button cta" href="/pricing?ref=caplt">Create a presentation like this <span class="logo"></span></a>
+		</div>
+
+
+		<div class="deck-options">
+			<a class="fullscreen-button" data-tooltip="Fullscreen" href="#"><span class="icon i-fullscreen"></span></a>
+			<a class="comment-button" data-tooltip="Comments" data-scroll-to href="#comments" data-scroll-to data-scroll-to-offset="-90"><span class="icon i-comment-stroke"></span></a>
+			<a class="share-button" data-tooltip="Share" href="#"><span class="icon i-share"></span></a>
+		</div>
+
+		<div class="clear"></div>
+
+		<div class="details">
+			<div class="deck-info">
+				<h3 class="title">C 指標 Pointer part2</h3>
+				<p class="description">操作方式：有出現往下按鈕的時候，請往下按來觀看，到底時再往右。 按 ESC 可以查看投影片架構</p>
+				<ul class="deck-meta">
+					<li data-tooltip="Published date" data-tooltip-delay="500">
+						<span class="icon i-clock"></span>
+						<time class="value ago" datetime="2015-10-31 09:45:26 UTC"></time>
+					</li>
+					<li data-tooltip="Kudos" data-tooltip-delay="500">
+						<span class="icon i-heart-fill"></span>
+						<span class="value" data-kudos-value="5" data-kudos-id="529962"></span>
+					</li>
+					<li data-tooltip="Views" data-tooltip-delay="500">
+						<span class="icon i-eye"></span>
+						<span class="value">526</span>
+					</li>
+				</ul>
+			</div>
+
+			<div class="user-info">
+	<div class="picture" style="background-image: url(https://lh6.googleusercontent.com/-jFXm7uS4At8/AAAAAAAAAAI/AAAAAAAAARM/RCcA8oJ3rwU/photo.jpg?sz=50)"></div>
+	<div class="text">
+		<h3 class="title">
+			<a href="/jie-hanchen" class="username">Jie-Han Chen</a>
+		</h3>
+		<p class="description"></p>
+		<ul class="links">
+			
+			
+		</ul>
+	</div>
+	<div class="clear"></div>
+</div>
+
+			<div class="clear"></div>
+		</div>
+	</header>
+
+	<section class="comments" id="comments">
+		<div id="disqus_thread"><span class="placeholder">Loading comments...</span></div>
+	</section>
+
+	<section class="deck-list">
+		<h2>More from <a href="/jie-hanchen">Jie-Han Chen</a></h2>
+		<ul class="carousel">
+			<li class="deck-thumbnail">
+  <div class="deck-image" style="background-image: url(https://s3.amazonaws.com/media-p.slid.es/thumbnails/6622e4b4a2405ac8ddb0ba74f6761434/thumb.jpg)">
+    <a class="deck-link" href="/jie-hanchen/pointer-2-3"></a>
+  </div>
+  <footer class="deck-details">
+    <a class="author" href="/jie-hanchen">
+      <span class="picture" style="background-image: url(https://lh6.googleusercontent.com/-jFXm7uS4At8/AAAAAAAAAAI/AAAAAAAAARM/RCcA8oJ3rwU/photo.jpg?sz=50)"></span>
+      <span class="name">Jie-Han Chen</span>
+    </a>
+    <div class="stats">
+      <div>937<span class="icon i-eye"></span></div>
+    </div>
+  </footer>
+</li>
+<li class="deck-thumbnail">
+  <div class="deck-image" style="background-image: url(https://s3.amazonaws.com/media-p.slid.es/thumbnails/secure/428e09/decks.jpg)">
+    <a class="deck-link" href="/jie-hanchen/deck"></a>
+  </div>
+  <footer class="deck-details">
+    <a class="author" href="/jie-hanchen">
+      <span class="picture" style="background-image: url(https://lh6.googleusercontent.com/-jFXm7uS4At8/AAAAAAAAAAI/AAAAAAAAARM/RCcA8oJ3rwU/photo.jpg?sz=50)"></span>
+      <span class="name">Jie-Han Chen</span>
+    </a>
+    <div class="stats">
+      <div>89<span class="icon i-eye"></span></div>
+    </div>
+  </footer>
+</li>
+
+		</ul>
+	</section>
+
+</div>
+
+      </div>
+      <footer class="global-footer">
+    <div class="link-group">
+      <h5>Product</h5>
+      <a href="http://slides.com/">Home</a>
+      <a href="http://slides.com/explore">Explore</a>
+      <a href="http://slides.com/features">Features</a>
+      <a href="http://slides.com/pricing">Pricing</a>
+      <a href="http://slides.com/developers">Developers</a>
+    </div>
+
+    <div class="link-group">
+      <h5>Help</h5>
+      <a href="http://help.slides.com" target="_blank">Forum</a>
+      <a href="http://help.slides.com/knowledgebase" target="_blank">Knowledge Base</a>
+      <a href="http://help.slides.com" data-feedback-mode="smartvote">Leave Feedback</a>
+      <a href="http://help.slides.com" data-feedback-mode="contact">Report an Issue</a>
+    </div>
+
+    <div class="link-group">
+      <h5>Community</h5>
+      <a href="http://blog.slides.com" target="_blank">Blog</a>
+      <a href="http://twitter.com/slides" target="_blank">Twitter</a>
+      <a href="http://facebook.com/slidesapp" target="_blank">Facebook</a>
+      <a href="http://plus.google.com/+slidesapp/" rel="publisher" target="_blank">Google+</a>
+    </div>
+
+    <div class="link-group">
+      <h5>Company</h5>
+      <a href="http://slides.com/about">About Slides</a>
+      <a href="http://slides.com/changelog">What&#39;s New</a>
+      <a href="http://slides.com/terms">Terms of Service</a>
+      <a href="http://slides.com/privacy">Privacy Policy</a>
+    </div>
+
+    <div class="copyright"><span>&copy; 2016 Slides, Inc.</span></div>
+</footer>
+
+    </div> <!--! end of #container -->
+    <script>
+UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/f7sH7NavrjjvuGxByaw.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
+
+UserVoice.push(['set', {
+  accent_color: '#448dd6',
+  trigger_color: 'white',
+  trigger_background_color: 'rgba(46, 49, 51, 0.6)',
+  position: 'automatic'
+}]);
+
+</script>
+    
+<script>
+	var SLConfig = {"deck":{"id":529962,"slug":"deck-2","title":"C 指標 Pointer part2","description":"操作方式：有出現往下按鈕的時候，請往下按來觀看，到底時再往右。 按 ESC 可以查看投影片架構","visibility":"all","published_at":"2015-10-31T09:45:26.055Z","sanitize_messages":null,"thumbnail_url":"https://s3.amazonaws.com/media-p.slid.es/thumbnails/secure/4b005d/decks.jpg","view_count":526,"user":{"id":382096,"username":"jie-hanchen","name":"Jie-Han Chen","description":null,"thumbnail_url":"https://lh6.googleusercontent.com/-jFXm7uS4At8/AAAAAAAAAAI/AAAAAAAAARM/RCcA8oJ3rwU/photo.jpg?sz=50","pro":false,"team_id":null,"settings":{"id":218563,"present_controls":true,"present_upsizing":true,"present_notes":true}},"background_transition":"slide","transition":"slide","theme_id":null,"theme_font":"montserrat","theme_color":"silver-green","auto_slide_interval":0,"comments_enabled":true,"forking_enabled":true,"rolling_links":false,"center":false,"should_loop":false,"share_notes":false,"slide_number":true,"rtl":false,"version":2,"collaborative":null,"deck_user_editor_limit":1,"data_updated_at":null,"font_typekit":null,"font_google":null}};
+</script>
+    <script defer="defer" src="//assets.slid.es/assets/application-f784ca6cb5aa1d15c9906b476546ae86.js"></script>
+    	<script defer="defer" src="//assets.slid.es/assets/reveal.min-7e7df91e55fa7d8c3fd4b02febc02eac.js"></script>
+	
+
+
+  </body>
+</html>
